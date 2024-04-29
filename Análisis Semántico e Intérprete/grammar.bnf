@@ -1,0 +1,70 @@
+program ::= statement
+    | program statement
+
+statement ::= INTEGER command
+
+command ::= 'LET' variable '=' expr
+    | 'READ' varlist
+    | 'DATA' numlist
+    | 'PRINT' plist optend
+    | 'GOTO' INTEGER
+    | 'IF' relexpr 'THEN' INTEGER
+    | 'FOR' IDENT '=' expr 'TO' expr optstep
+    | 'NEXT' IDENT
+    | 'END'
+    | 'REM'
+    | 'STOP'
+    | 'DEF' FN '(' IDENT ')' = expr 
+    | 'GOSUB' INTEGER 
+    | 'RETURN'
+    | 'DIM' dimlist
+
+expr ::= expr '+' expr
+    | expr '-' expr
+    | expr '*' expr
+    | expr '/' expr
+    | expr '^' expr
+    | INTEGER
+    | FLOAT
+    | variable
+    | '(' expr ')'
+    | '-' expr
+
+relexpr ::= expr LT expr
+    | expr LE expr
+    | expr GT expr
+    | expr GE expr
+    | expr '=' expr
+    | expr NE expr
+
+variable ::= IDENT
+    | IDENT '(' INTEGER ')'
+    | IDENT '(' INTEGER ',' INTEGER ')'
+
+optend ::= ',' | ';' |
+
+optstep ::= 'STEP' expr |
+
+dimlist ::= dimitem
+    | dimlist dimitem
+
+dimitem ::= IDENT '(' INTEGER ')'
+    | IDENT '(' INTEGER ',' INTEGER ')'
+
+varlist ::= variable
+    | varlist ',' variable
+
+numlist ::= number
+    | numlist ',' number
+
+number ::= INTEGER
+    | FLOAT
+    | '-' INTEGER
+    | '-' FLOAT
+
+plist ::= pitem
+    | plist ',' pitem
+
+pitem ::= STRING
+    | STRING expr
+    | expr

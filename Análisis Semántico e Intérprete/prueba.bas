@@ -1,0 +1,6 @@
+10 LET A(4) = 10
+20 PRINT A
+30 LET A = A + 15
+40 LET B = A + 30
+50 PRINT B
+60 END
