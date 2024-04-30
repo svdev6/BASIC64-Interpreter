@@ -45,6 +45,7 @@ class Interpreter(Visitor):
             'RND'   : lambda x: random.random(),
             'TAB'   : lambda x: ' '*x,
             'TIME'  : self.get_time,
+            'LEN'   : self.len_str,
             'LEFT$' : lambda x,n  : x[:n],
             'MID$'  : lambda x,m,n: x[m:n],
             'RIGHT$': lambda x,n : x[-n:],
@@ -60,10 +61,10 @@ class Interpreter(Visitor):
             'rnd'   : lambda x: random.random(),
             'tab'   : lambda x: ' '*x,
             'time'  : self.get_time,
+            'len'   : self.len_str,
             'left$' : lambda x,n  : x[:n],
             'mid$'  : lambda x,m,n: x[m:n],
-            'right$': lambda x,n : x[-n:]
-
+            'right$': lambda x,n : x[-n:] 
         }
     
     @classmethod
@@ -161,6 +162,13 @@ class Interpreter(Visitor):
     # Calcular el tiempo desde que se inició el intérprete
     def get_time(self):
         return time.time() - self.start_time
+    
+    def len_str(self, expr):
+        # Check if the argument is a string
+        if isinstance(expr, str):
+            return len(expr)  # Return the length of the string
+        else:
+            self.error(f"La función LEN() espera obtener un string, se obtuvo: {type(expr).__name__}")
 
     # Función que inicializa y corre el intérprete de BASIC
     def run(self):
@@ -314,8 +322,7 @@ class Interpreter(Visitor):
         if label:
             # Escribir mensaje antes de solicitar la entrada de datos
             sys.stdout.write(label)
-        
-        
+
         for variable in instr.vlist:
             value = input()
             if variable.var[-1] == '$':
@@ -485,13 +492,13 @@ class Interpreter(Visitor):
         name = instr.name
         expr = instr.expr
 
+        # Si la función no cuenta con argumentos, como la función TIME()
         if expr is None:
             return self.functions[name]()
         else:
             expr = expr.accept(self)
             return self.functions[name](expr)
 
-    
     def visit(self, instr: Call):
         name = instr.name  # Nombre de la función
         expr = instr.expr.accept(self)  # Argumento pasado a la función
@@ -500,13 +507,7 @@ class Interpreter(Visitor):
         if name not in self.functions:
             self.error(f"Función {name} no definida")
 
-        # Asegurarse de que el argumento es numérico antes de llamar la función
-        try:
-            expr = float(expr)  # Convert to float
-        except ValueError:
-            self.error(f"Parámetro erróneo, se recibió {expr}")
-
-    # Llamar la función después de evaluar si el argumento es numérico
+        # Llamar la función
         return self.functions[name](expr)
     
     def visit(self, instr: Variable):
