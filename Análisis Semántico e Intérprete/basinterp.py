@@ -44,6 +44,8 @@ class Interpreter(Visitor):
             'INT'   : lambda x: int(x),
             'RND'   : lambda x: random.random(),
             'TAB'   : lambda x: ' '*x,
+            'DEG'   : lambda x: x * (180.0/3.141592654),
+            'PI'    : self.return_pi,
             'TIME'  : self.get_time,
             'LEN'   : self.len_str,
             'LEFT$' : lambda x,n  : x[:n],
@@ -60,6 +62,8 @@ class Interpreter(Visitor):
             'int'   : lambda x: int(x),
             'rnd'   : lambda x: random.random(),
             'tab'   : lambda x: ' '*x,
+            'deg'   : lambda x: x * (180.0/3.141592654),
+            'pi'    : self.return_pi,
             'time'  : self.get_time,
             'len'   : self.len_str,
             'left$' : lambda x,n  : x[:n],
@@ -170,6 +174,9 @@ class Interpreter(Visitor):
         else:
             self.error(f"La función LEN() espera obtener un string, se obtuvo: {type(expr).__name__}")
 
+    def return_pi(self):
+        return 3.141592654
+    
     # Función que inicializa y corre el intérprete de BASIC
     def run(self):
         # Tabla de Simbolos
