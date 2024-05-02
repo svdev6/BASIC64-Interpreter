@@ -8,7 +8,8 @@ class SyntaxError(Exception):
     pass
 
 class Parser(sly.Parser):
-    expected_shift_reduce = 4
+
+    expected_shift_reduce = 2
     debugfile = 'parse.txt'
 
     tokens = Lexer.tokens
@@ -73,7 +74,7 @@ class Parser(sly.Parser):
     
     @_("LET variable '=' error")
     def command(self, p):
-        raise SyntaxError("Instrucción LET malformada")
+        raise SyntaxError("Expresión errónea en LET")
 
     # Instrucción READ
 
@@ -81,19 +82,35 @@ class Parser(sly.Parser):
     def command(self, p):
         return Read(p.varlist)
     
+    @_("RESTORE")
+    def command(self, p):
+        return Restore()
+    
     @_("READ error")
     def command(self, p):
         raise SyntaxError("Instrucción READ malformada")
 
     # Instrucción DATA
 
-    @_("DATA numlist")
+    @_("DATA mixedlist")
     def command(self, p):
-        return Data(p.numlist)
+        return Data(p.mixedlist)
     
     @_("DATA error")
     def command(self, p):
         raise SyntaxError("Instrucción DATA malformada")
+    
+    @_("mixeditem")
+    def mixedlist(self, p):
+        return [p.mixeditem]
+
+    @_("mixedlist ',' mixeditem")
+    def mixedlist(self, p):
+        return p.mixedlist + [p.mixeditem]
+    
+    @_("number", "STRING")
+    def mixeditem(self, p):
+        return p[0]
     
     # Instrucción INPUT
     
@@ -259,21 +276,29 @@ class Parser(sly.Parser):
     def expr(self, p):
         return Bltin(p.BLTIN)
     
-    @_("BLTIN '(' expr ')'")
+    @_("BLTIN '(' exprlist ')'")
     def expr(self, p):
-        return Bltin(p.BLTIN, p.expr)
+        return Bltin(p.BLTIN, p.exprlist)
     
     # Llamado a función
     
-    @_("FNAME '(' expr ')'")
+    @_("FNAME '(' exprlist ')'")
     def expr(self, p):
-        return Call(p.FNAME, p.expr)
+        return Call(p.FNAME, p.exprlist)
     
     # Expresiones
 
     @_("'(' expr ')'")
     def expr(self, p):
         return Group(p.expr)
+    
+    @_("expr")
+    def exprlist(self, p):
+        return [ p.expr ]
+    
+    @_("exprlist ',' expr")
+    def exprlist(self, p):
+        return p.exprlist + [ p.expr ]
 
     @_("'-' expr %prec UMINUS")
     def expr(self, p):
@@ -295,15 +320,15 @@ class Parser(sly.Parser):
     @_("IDENT")
     def variable(self, p):
         return Variable(p.IDENT)
-
-    @_("IDENT '(' INTEGER ')'")
-    def variable(self, p):
-        return Variable(p.IDENT, Number(p.INTEGER))
-
-    @_("IDENT '(' INTEGER ',' INTEGER ')'")
-    def variable(self, p):
-        return Variable(p.IDENT, Number(p.INTEGER0), Number(p.INTEGER1))
     
+    @_("IDENT '(' expr ')'")
+    def variable(self, p):
+        return Variable(p.IDENT, p.expr)
+
+    @_("IDENT '(' expr ',' expr ')'")
+    def variable(self, p):
+        return Variable(p.IDENT, p.expr0, p.expr1)
+
     # Salto opcional
 
     @_("STEP expr")
@@ -341,27 +366,11 @@ class Parser(sly.Parser):
     def varlist(self, p):
         return [ p.variable ]
     
-    @_("IDENT '(' expr ')'")
-    def variable(self, p):
-        return Variable(p.IDENT, p.expr)
-
-    @_("IDENT '(' expr ',' expr ')'")
-    def variable(self, p):
-        return Variable(p.IDENT, p.expr0, p.expr1)
-
     @_("varlist ',' variable")
     def varlist(self, p):
         return p.varlist + [ p.variable ]
     
     # Lista de números
-
-    @_("number")
-    def numlist(self, p):
-        return [ p.number ]
-
-    @_("numlist ',' number")
-    def numlist(self, p):
-        return p.numlist + [ p.number ]
 
     @_("INTEGER")
     def number(self, p):
@@ -413,7 +422,7 @@ class Parser(sly.Parser):
         if self.context:
             self.context.error(lineno, f"Error de sintaxis en {value}")
         else:
-            print(f"Línea {lineno}: Error de Sintaxis en {value}")
+            print(f"Línea {lineno}: Error de sintaxis en {value}")
 
     def __init__(self, context = None):
         self.context = context
@@ -422,8 +431,7 @@ def test(txt):
     from basinterp import Interpreter
     l = Lexer()
     p = Parser()
-    verbose = False  
-
+    verbose = False
     try:
         prog = p.parse(l.tokenize(txt))
         "print(prog)"
