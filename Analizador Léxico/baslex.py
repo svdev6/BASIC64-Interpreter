@@ -10,7 +10,7 @@ class Lexer(sly.Lexer):
 		# Keywords
 		LET, READ, DATA, PRINT, GOTO, IF,
 		THEN, FOR, NEXT, TO, STEP, END,
-		STOP, DEF, GOSUB, DIM, REM, RETURN, BLTIN, INPUT,
+		STOP, DEF, GOSUB, DIM, REM, RETURN, BLTIN, INPUT, RESTORE,
 
 		# Operadores de relacion
 		LT, LE, GT, GE, NE,
@@ -27,7 +27,7 @@ class Lexer(sly.Lexer):
 	literals = '+-*/^=():,;'
 
 	# Ignorar
-	ignore = r' \t\r'
+	ignore = ' \t\r'
 
 	# Expresiones regulares
 	@_(r'REM .*')
@@ -35,35 +35,37 @@ class Lexer(sly.Lexer):
 		t.value = t.value[4:]
 		return t
 
-	LET    = r'LET|let'
-	READ   = r'READ|read'
-	DATA   = r'DATA|data'
-	PRINT  = r'PRINT|print'
-	GOTO   = r'GOTO|goto'
-	IF     = r'IF|if'
-	THEN   = r'THEN|then'
-	FOR    = r'FOR|for'
-	NEXT   = r'NEXT|next'
-	TO     = r'TO|to'
-	STEP   = r'STEP|step'
-	END    = r'END|end'
-	STOP   = r'STOP|stop'
-	DEF    = r'DEF|def'
-	GOSUB  = r'GOSUB|gosub'
-	DIM    = r'DIM|dim'
-	RETURN = r'RETURN|return'
-	INPUT = r'INPUT|input'
+	LET    = r'LET'
+	READ   = r'READ'
+	DATA   = r'DATA'
+	PRINT  = r'PRINT'
+	GOTO   = r'GOTO'
+	IF     = r'IF'
+	THEN   = r'THEN'
+	FOR    = r'FOR'
+	NEXT   = r'NEXT'
+	TO     = r'TO'
+	STEP   = r'STEP'
+	END    = r'END'
+	STOP   = r'STOP'
+	DEF    = r'DEF'
+	GOSUB  = r'GOSUB'
+	DIM    = r'DIM'
+	RETURN = r'RETURN'
+	INPUT = r'INPUT'
+	RESTORE =r'RESTORE'
 
-	BLTIN = r'SIN|COS|TAN|ATN|EXP|ABS|LOG|SQR|RND|INT|TAB|DEG|PI|TIME|sin|cos|tan|atn|exp|abs|log|sqr|rnd|int|tab|deg|pi|time'
+	BLTIN = r'SIN|COS|TAN|ATN|EXP|ABS|LOG|SQR|RND|INT|TAB|DEG|PI|TIME|LEN|LEFT\$|MID\$|RIGHT\$'
 
-	FNAME = r'FN ?[A-Z]|fn ?[a-z]'
-	IDENT = r'[A-Z]\d?\$?|[a-z]\d?\$'
+	FNAME = r'FN ?[A-Z]'
+	IDENT = r'[A-Z]\d?\$?'
 
+	NE = r'<>'
 	LE = r'<='
 	LT = r'<'
 	GE = r'>='
 	GT = r'>'
-	NE = r'<>'
+
 
 	@_(r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+))')
 	def FLOAT(self, t):

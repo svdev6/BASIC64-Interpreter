@@ -103,7 +103,7 @@ class Variable(Expression):
 @dataclass
 class Bltin(Expression):
     name : str
-    expr : Expression
+    expr : List[Expression] = None
 
 @dataclass
 class Literal(Expression):
@@ -130,7 +130,11 @@ class Goto(Statement):
 
 @dataclass
 class Data(Statement):
-    numlist : List[Expression]
+    mixedlist : List[Expression]
+
+@dataclass
+class Restore(Statement):
+    pass
 
 @dataclass
 class Stop(Statement):
@@ -153,7 +157,7 @@ class Def(Statement):
 @dataclass
 class Call(Statement):
     name : str
-    expr: Expression = None
+    expr: List[Expression] = None
 
 @dataclass
 class Return(Statement):
