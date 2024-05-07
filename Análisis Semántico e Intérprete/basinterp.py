@@ -553,7 +553,7 @@ class Interpreter(Visitor):
                 return left + right
             elif instr.op == '=':
                 return left == right
-            elif instr.op == '!=':
+            elif instr.op == '<>':
                 return left != right
             elif instr.op == '<':
                 return left < right
