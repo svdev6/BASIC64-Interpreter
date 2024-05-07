@@ -246,7 +246,7 @@ class Parser(sly.Parser):
     def command(self, p):
         raise SyntaxError("Instrucción DIM malformada")
     
-    # Expresiones relacionales
+    # Expresiones aritméticas
 
     @_("expr '+' expr",
        "expr '-' expr",
@@ -304,7 +304,7 @@ class Parser(sly.Parser):
     def expr(self, p):
         return Unary(p[0], p.expr)
     
-    # Expresiones aritméticas
+    # Expresiones relacionales
 
     @_("expr LT expr",
        "expr LE expr",
