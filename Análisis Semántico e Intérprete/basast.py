@@ -67,7 +67,7 @@ class Next(Statement):
 
 @dataclass
 class Remark(Statement):
-    rem : str = None
+    rem : str
 
 @dataclass
 class End(Statement):

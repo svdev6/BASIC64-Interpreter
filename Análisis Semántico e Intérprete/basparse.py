@@ -199,7 +199,7 @@ class Parser(sly.Parser):
     @_("REM")
     def command(self, p):
         return Remark(p.REM)
-    
+
     # Instrucción STOP
 
     @_("STOP")

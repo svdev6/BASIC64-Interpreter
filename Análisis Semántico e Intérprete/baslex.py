@@ -30,9 +30,9 @@ class Lexer(sly.Lexer):
 	ignore = ' \t\r'
 
 	# Expresiones regulares
-	@_(r'REM .*')
+	@_(r'REM( .*)?')
 	def REM(self, t):
-		t.value = t.value[4:]
+		t.value = t.value[4:] if len(t.value) > 3 else ''
 		return t
 
 	LET    = r'LET'
