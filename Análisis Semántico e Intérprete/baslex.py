@@ -55,10 +55,10 @@ class Lexer(sly.Lexer):
 	INPUT = r'INPUT'
 	RESTORE =r'RESTORE'
 
-	BLTIN = r'SIN|COS|TAN|ATN|EXP|ABS|LOG|SQR|RND|INT|TAB|DEG|PI|TIME|LEN|LEFT\$|MID\$|RIGHT\$'
+	BLTIN = r'SIN|COS|TAN|ATN|EXP|ABS|LOG|SQR|RND|INT|TAB|DEG|PI|TIME|LEN|LEFT\$|MID\$|RIGHT\$|CHR\$'
 
 	FNAME = r'FN ?[A-Z]'
-	IDENT = r'[A-Z]\d?\$?'
+	IDENT = r'[A-Z][A-Z0-9]*\$?'
 
 	NE = r'<>'
 	LE = r'<='

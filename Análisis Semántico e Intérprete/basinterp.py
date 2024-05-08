@@ -52,6 +52,7 @@ class Interpreter(Visitor):
             'LEN'   : self.len_str,
             'LEFT$' : lambda x,n  : x[:n],
             'RIGHT$': lambda x,n : x[-n:],
+            'CHR$'  : self.get_ascii,
             'sin'   : lambda x: math.sin(x),
             'cos'   : lambda x: math.cos(x),
             'tan'   : lambda x: math.tan(x),
@@ -68,7 +69,8 @@ class Interpreter(Visitor):
             'time'  : self.get_time,
             'len'   : self.len_str,
             'left$' : lambda x,n  : x[:n],
-            'right$': lambda x,n : x[-n:] 
+            'right$': lambda x,n : x[-n:],
+            'chr$'  : self.get_ascii,
         }
     
     @classmethod
@@ -179,10 +181,16 @@ class Interpreter(Visitor):
         if isinstance(expr, str):
             return len(expr)  # Retornar la longitud
         else:
-            self.error(f"La función LEN() espera obtener un string, se obtuvo: {type(expr).__name__}")
+            self.error(f"La función LEN() esperaba obtener un string, se obtuvo: {type(expr).__name__}")
 
     def return_pi(self):
         return 3.141592654
+    
+    def get_ascii(self, expr):
+        if isinstance(expr, Union[int, float]):
+            return chr(expr)
+        else:
+            self.error(f"La función CHR$() esperaba obtener un número, se obtuvo: {type(expr).__name__}")
     
     # Función que inicializa y corre el intérprete de BASIC
     def run(self):
@@ -313,7 +321,7 @@ class Interpreter(Visitor):
             if pitem == ',':
                 self.pad(15)
             elif pitem == ';':
-                self.pad(3)
+                self.pad(1)
             elif isinstance(pitem, str):
                 self.print_string(pitem)
             elif isinstance(pitem, (int, float)):
@@ -406,7 +414,7 @@ class Interpreter(Visitor):
         loopinst = self.prog[self.stat[self.pc]]
         forvar = loopinst.ident
         if nextvar != forvar:
-            print(f"NEXT no concuerda con FOR en la linea {lineno}")
+            print(f"NEXT {nextvar} no concuerda con FOR {forvar} en la linea {lineno}")
             return
         raise BasicContinue()
 
@@ -538,7 +546,7 @@ class Interpreter(Visitor):
                 x = dim1.accept(self)
                 y = dim2.accept(self)
                 if x < 1 or x > len(self.tables[var]) or y < 1 or y > len(self.tables[var][0]):
-                    self.error(f'Los índices de la tabla se salieron de sus límites en la linea {lineno}')
+                    self.error(f'Los índices de la tabla en la variable {var} se salieron de sus límites en la linea {lineno}')
                 return self.tables[var][x - 1][y - 1]
             else:
                 self.error(f"Arreglo bidimensional '{var}' no definido en la linea {lineno}")
