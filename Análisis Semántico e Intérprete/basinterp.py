@@ -535,16 +535,18 @@ class Interpreter(Visitor):
         elif dim1 and not dim2:
             if var in self.lists:
                 x = dim1.accept(self)
-                if x < 1 or x > len(self.lists[var]):
-                    self.error(f'El índice de la lista se salió de su límite en la linea {lineno}')
+                "if x < 1 or x > len(self.lists[var]):"
+                "self.error(f'El índice de la lista se salió de su límite en la linea {lineno}')"
                 return self.lists[var][x - 1]
       
         elif dim1 and dim2:
             if var in self.tables:
                 x = dim1.accept(self)
                 y = dim2.accept(self)
-                if x < 1 or x > len(self.tables[var]) or y < 1 or y > len(self.tables[var][0]):
-                    self.error(f'Los índices de la tabla en la variable {var} se salieron de sus límites en la linea {lineno}')
+                x = int(x)
+                y = int(y)
+                "if x < 1 or x > len(self.tables[var]) or y < 1 or y > len(self.tables[var][0]):"
+                "self.error(f'Los índices de la tabla en la variable {var} se salieron de sus límites en la linea {lineno}')"
                 return self.tables[var][x - 1][y - 1]
             
         else:

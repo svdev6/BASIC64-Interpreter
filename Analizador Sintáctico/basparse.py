@@ -3,6 +3,7 @@ import sly
 
 from baslex    import Lexer
 from basast    import *
+from basrender import DotRender
 
 class SyntaxError(Exception):
     pass
@@ -428,14 +429,17 @@ class Parser(sly.Parser):
         self.context = context
 
 def test(txt):
-    from basinterp import Interpreter
+
     l = Lexer()
     p = Parser()
     verbose = False
     try:
         prog = p.parse(l.tokenize(txt))
-        "print(prog)"
-        Interpreter.interpret(prog.lines, verbose = verbose)
+        print(prog)
+        dot = DotRender.render(prog)
+        print(dot)
+        with open("ast_graph.dot", "w") as f:
+            f.write(str(dot))
 
     except SyntaxError as e:
         print(e)

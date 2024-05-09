@@ -59,7 +59,7 @@ class DotRender(Visitor):
 
     def visit_Remark(self, n: Remark):
         name = self.name()
-        self.dot.node(name, label=f'Remark:{n.rem[3:]}')
+        self.dot.node(name, label=f'Remark:{n.rem}')
         return name
 
     def visit_For(self, n: For):
@@ -88,6 +88,15 @@ class DotRender(Visitor):
     def visit_Variable(self, n: Variable):
         name = self.name()
         self.dot.node(name, label=f'Variable')
+        if not n.dim1 and not n.dim2:
+            self.dot.edge(name, n.var, label='var')
+        elif n.dim1 and not n.dim2:
+            self.dot.edge(name, n.var, label='var')
+            self.dot.edge(name, n.dim1.accept(self), label='dim1')
+        elif n.dim1 and n.dim1:
+            self.dot.edge(name, n.var, label='var')
+            self.dot.edge(name, n.dim1.accept(self), label='dim1')
+            self.dot.edge(name, n.dim2.accept(self), label='dim2')
         return name
 
     def visit_Number(self, n: Number):
@@ -97,25 +106,27 @@ class DotRender(Visitor):
 
     def visit_End(self, n: End):
         name = self.name()
-        self.dot.node(name, label='END')
+        self.dot.node(name, label='End')
         return name
 
     def visit_IfStatement(self, n: IfStatement):
         name = self.name()
         self.dot.node(name, label='If')
         self.dot.edge(name, n.relexpr.accept(self), label='relexpr')
+        self.dot.edge(name, str(n.lineno), label='lineno')
         return name
 
     def visit_Goto(self, n: Goto):
         name = self.name()
         self.dot.node(name, label='Goto')
+        self.dot.edge(name, str(n.lineno), label='lineno')
         return name
 
     def visit_Data(self, n: Data):
         name = self.name()
         self.dot.node(name, label='Data')
-        for num in n.numlist:
-            self.dot.edge(name, num.accept(self))
+        for data in n.mixedlist:
+            self.dot.edge(name, data.accept(self))
         return name
 
     def visit_Read(self, n: Read):
@@ -127,20 +138,28 @@ class DotRender(Visitor):
 
     def visit_Stop(self, n: Stop):
         name = self.name()
-        self.dot.node(name, label='STOP')
+        self.dot.node(name, label='Stop')
         return name
     
     def visit_Def(self, n: Def):
         name = self.name()
         self.dot.node(name, label='Def')
-        self.dot.edge(name, n.fn.accept(self), label='fname')
-        self.dot.edge(name, n.ident.accept(self), label='ident')
+        if isinstance(n.fn, str):
+            self.dot.edge(name, n.fn, label='fname')
+        if isinstance(n.ident, str):
+            self.dot.edge(name, n.ident, label='ident')
         self.dot.edge(name, n.expr.accept(self), label='expr')
         return name
 
     def visit_GoSub(self, n: GoSub):
         name = self.name()
-        self.dot.node(name, label=f'Gosub\nlineno {n.integer}')
+        self.dot.node(name, label='Gosub')
+        self.dot.edge(name, str(n.lineno), label='lineno')
+        return name
+    
+    def visit_Return(self, n: Return):
+        name = self.name()
+        self.dot.node(name, label='Return')
         return name
 
     def visit_Dim(self, n: Dim):
@@ -153,13 +172,15 @@ class DotRender(Visitor):
     def visit_Print(self, n: Print):
         name = self.name()
         self.dot.node(name, label='Print')
-        if isinstance(n.plist, String):  # Verifica si plist es un objeto String
-            self.dot.edge(name, n.plist.accept(self))  # Llama a accept directamente en el objeto String
-        elif isinstance(n.plist, Variable): # Verifica si plist es un objeto Variable
-            self.dot.edge(name, n.plist.accept(self)) # Llama a accept directamente en el objeto Variable
-        else:
-            for expr in n.plist:  # Itera sobre una lista de expresiones
-                self.dot.edge(name, expr.accept(self))
+        clean_plist = [item for item in n.plist if hasattr(item, 'accept')]
+        for pitem in n.plist:
+            if isinstance(pitem, list):
+                for item in pitem:
+                    self.dot.edge(name, item.accept(self), label='pitem')
+            elif isinstance(pitem, str):
+                self.dot.edge(name, pitem, label='pitem')
+        for expr in clean_plist:
+                self.dot.edge(name, expr.accept(self), label='expr')
         if n.optend:
             self.dot.edge(name, n.optend.accept(self), label='optend')
         return name
@@ -180,7 +201,7 @@ class DotRender(Visitor):
     def visit_Unary(self, n: Unary):
         name = self.name()
         self.dot.node(name, label='Unary')
-        self.dot.edge(name, n.op.accept(self), label='op')
+        self.dot.edge(name, n.op, label='op')
         self.dot.edge(name, n.expr.accept(self), label='expr')
         return name
 
@@ -194,7 +215,41 @@ class DotRender(Visitor):
         self.dot.node(name, label=f'String\nvalue: {n.value}')
         return name
 
-    def visit_Array(self, n: Array):
+    def visit_Group(self, n: Group):
         name = self.name()
-        self.dot.node(name, label='Array')
+        self.dot.node(name, label='Group')
+        self.dot.edge(name, n.expr.accept(self), label='expr')
         return name
+    
+    def visit_Bltin(self, n: Bltin):
+        name = self.name()  # Get a unique node name
+        self.dot.node(name, label=f'Bltin\nname: {n.name}')  # Create a node for the built-in function
+        # If there's a list of expressions, create edges to each
+        if n.expr:
+            for expr in n.expr:
+                self.dot.edge(name, expr.accept(self), label='expr')
+        return name
+    
+    def visit_Input(self, n: Input):
+        name = self.name()  # Get a unique node name
+        self.dot.node(name, label=f'Input\nlabel: {n.label}')  # Create a node for the input label
+        # Connect to each variable in the input list
+        for var in n.vlist:
+            self.dot.edge(name, var.accept(self), label='var')
+        return name
+    
+    def visit_Call(self, n: Call):
+        name = self.name()  # Get a unique node name
+        self.dot.node(name, label=f'Call\nname: {n.name}')  # Create a node for the function call
+        # Connect to each argument in the expression list
+        if n.expr:
+            for expr in n.expr:
+                self.dot.edge(name, expr.accept(self), label='arg')
+        return name
+    
+    def visit_Restore(self, n: Restore):
+        name = self.name()
+        self.dot.node(name, label='RESTORE')
+        return name
+
+

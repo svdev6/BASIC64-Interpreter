@@ -30,35 +30,35 @@ class Lexer(sly.Lexer):
 	ignore = ' \t\r'
 
 	# Expresiones regulares
-	@_(r'REM .*')
+	@_(r'REM( .*)?')
 	def REM(self, t):
-		t.value = t.value[4:]
+		t.value = t.value[4:] if len(t.value) > 3 else ''
 		return t
 
-	LET    = r'LET'
-	READ   = r'READ'
-	DATA   = r'DATA'
-	PRINT  = r'PRINT'
-	GOTO   = r'GOTO'
-	IF     = r'IF'
-	THEN   = r'THEN'
-	FOR    = r'FOR'
-	NEXT   = r'NEXT'
-	TO     = r'TO'
-	STEP   = r'STEP'
-	END    = r'END'
-	STOP   = r'STOP'
-	DEF    = r'DEF'
-	GOSUB  = r'GOSUB'
-	DIM    = r'DIM'
-	RETURN = r'RETURN'
-	INPUT = r'INPUT'
-	RESTORE =r'RESTORE'
+	LET     = r'LET'
+	READ    = r'READ'
+	DATA    = r'DATA'
+	PRINT   = r'PRINT'
+	GOTO    = r'GOTO'
+	IF      = r'IF'
+	THEN    = r'THEN'
+	FOR     = r'FOR'
+	NEXT    = r'NEXT'
+	TO      = r'TO'
+	STEP    = r'STEP'
+	END     = r'END'
+	STOP    = r'STOP'
+	DEF     = r'DEF'
+	GOSUB   = r'GOSUB'
+	DIM     = r'DIM'
+	RETURN  = r'RETURN'
+	INPUT   = r'INPUT'
+	RESTORE = r'RESTORE'
 
-	BLTIN = r'SIN|COS|TAN|ATN|EXP|ABS|LOG|SQR|RND|INT|TAB|DEG|PI|TIME|LEN|LEFT\$|MID\$|RIGHT\$'
+	BLTIN = r'SIN|COS|TAN|ATN|EXP|ABS|LOG|SQR|RND|INT|TAB|DEG|PI|TIME|LEN|LEFT\$|MID\$|RIGHT\$|CHR\$'
 
 	FNAME = r'FN ?[A-Z]'
-	IDENT = r'[A-Z]\d?\$?'
+	IDENT = r'[A-Z][A-Z0-9]*\$?'
 
 	NE = r'<>'
 	LE = r'<='

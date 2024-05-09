@@ -2,156 +2,185 @@ digraph AST {
 	node [color=deepskyblue shape=box style=filled]
 	edge [arrowhead=none]
 	n01 [label=Program]
-	n02 [label="Remark: ::: SOLVE A SYSTEM OF LINEAR EQUATIONS"]
+	n02 [label="Remark:prime.bas"]
 	n01 -> n02
-	n03 [label="Remark: ::: A1*X1 + A2*X2 = B1"]
+	n03 [label="Remark:run the sieve of erastosthenes program"]
 	n01 -> n03
-	n04 [label="Remark: ::: A3*X1 + A4*X2 = B2"]
+	n04 [label="Remark:this returns 1899 primes in about 1 second"]
 	n01 -> n04
-	n05 [label="Remark: --------------------------------------"]
+	n05 [label="Remark:on a raspberry pi 4 running dbasic"]
 	n01 -> n05
-	n06 [label=Read]
+	n06 [label=Let]
 	n07 [label=Variable]
-	n06 -> n07
-	n08 [label=Variable]
-	n06 -> n08
-	n09 [label=Variable]
-	n06 -> n09
-	n10 [label=Variable]
-	n06 -> n10
+	n07 -> s [label=var]
+	n06 -> n07 [label=var]
+	n08 [label="Number
+value 8190"]
+	n06 -> n08 [label=expr]
 	n01 -> n06
-	n11 [label=Let]
-	n12 [label=Variable]
-	n11 -> n12 [label=var]
-	n13 [label="Binary
-op -"]
-	n14 [label="Binary
-op *"]
+	n09 [label=Dim]
+	n10 [label=Variable]
+	n10 -> f [label=var]
+	n11 [label="Number
+value 8191"]
+	n10 -> n11 [label=dim1]
+	n09 -> n10
+	n01 -> n09
+	n12 [label=Print]
+	n13 [label="String
+value: 1 iteration"]
+	n12 -> n13 [label=pitem]
+	n01 -> n12
+	n14 [label=Let]
 	n15 [label=Variable]
-	n14 -> n15 [label=left]
-	n16 [label=Variable]
-	n14 -> n16 [label=right]
-	n13 -> n14 [label=left]
-	n17 [label="Binary
-op *"]
+	n15 -> c [label=var]
+	n14 -> n15 [label=var]
+	n16 [label="Number
+value 0"]
+	n14 -> n16 [label=expr]
+	n01 -> n14
+	n17 [label=For]
 	n18 [label=Variable]
-	n17 -> n18 [label=left]
-	n19 [label=Variable]
-	n17 -> n19 [label=right]
-	n13 -> n17 [label=right]
-	n11 -> n13 [label=expr]
-	n01 -> n11
-	n20 [label=If]
-	n21 [label=Logical]
-	n20 -> n21 [label=relexpr]
-	n01 -> n20
-	n22 [label=Read]
+	n18 -> i [label=var]
+	n17 -> n18 [label=ident]
+	n19 [label="Number
+value 0"]
+	n17 -> n19 [label=low]
+	n20 [label=Variable]
+	n20 -> s [label=var]
+	n17 -> n20 [label=top]
+	n01 -> n17
+	n21 [label=Let]
+	n22 [label=Variable]
+	n22 -> f [label=var]
 	n23 [label=Variable]
-	n22 -> n23
-	n24 [label=Variable]
-	n22 -> n24
-	n01 -> n22
-	n25 [label=Let]
+	n23 -> i [label=var]
+	n22 -> n23 [label=dim1]
+	n21 -> n22 [label=var]
+	n24 [label="Number
+value 1"]
+	n21 -> n24 [label=expr]
+	n01 -> n21
+	n25 [label=Next]
 	n26 [label=Variable]
-	n25 -> n26 [label=var]
-	n27 [label="Binary
-op /"]
-	n28 [label="Binary
-op -"]
-	n29 [label="Binary
-op *"]
-	n30 [label=Variable]
-	n29 -> n30 [label=left]
-	n31 [label=Variable]
-	n29 -> n31 [label=right]
-	n28 -> n29 [label=left]
-	n32 [label="Binary
-op *"]
-	n33 [label=Variable]
-	n32 -> n33 [label=left]
-	n34 [label=Variable]
-	n32 -> n34 [label=right]
-	n28 -> n32 [label=right]
-	n27 -> n28 [label=left]
-	n35 [label=Variable]
-	n27 -> n35 [label=right]
-	n25 -> n27 [label=expr]
+	n26 -> i [label=var]
+	n25 -> n26
 	n01 -> n25
-	n36 [label=Let]
+	n27 [label=For]
+	n28 [label=Variable]
+	n28 -> i [label=var]
+	n27 -> n28 [label=ident]
+	n29 [label="Number
+value 0"]
+	n27 -> n29 [label=low]
+	n30 [label=Variable]
+	n30 -> s [label=var]
+	n27 -> n30 [label=top]
+	n01 -> n27
+	n31 [label=If]
+	n32 [label=Logical]
+	n31 -> n32 [label=relexpr]
+	n31 -> 180 [label=lineno]
+	n01 -> n31
+	n33 [label=Let]
+	n34 [label=Variable]
+	n34 -> p [label=var]
+	n33 -> n34 [label=var]
+	n35 [label="Binary
+op +"]
+	n36 [label="Binary
+op +"]
 	n37 [label=Variable]
-	n36 -> n37 [label=var]
-	n38 [label="Binary
-op /"]
-	n39 [label="Binary
-op -"]
-	n40 [label="Binary
-op *"]
-	n41 [label=Variable]
-	n40 -> n41 [label=left]
-	n42 [label=Variable]
-	n40 -> n42 [label=right]
-	n39 -> n40 [label=left]
-	n43 [label="Binary
-op *"]
-	n44 [label=Variable]
-	n43 -> n44 [label=left]
-	n45 [label=Variable]
-	n43 -> n45 [label=right]
-	n39 -> n43 [label=right]
-	n38 -> n39 [label=left]
-	n46 [label=Variable]
-	n38 -> n46 [label=right]
-	n36 -> n38 [label=expr]
-	n01 -> n36
-	n47 [label=Print]
-	n48 [label=Variable]
-	n47 -> n48
-	n49 [label=Variable]
-	n47 -> n49
-	n01 -> n47
-	n50 [label=Goto]
-	n01 -> n50
-	n51 [label=Print]
-	n52 [label="String
-value: NO UNIQUE SOLUTION"]
-	n51 -> n52
-	n01 -> n51
-	n53 [label=Data]
-	n54 [label="Number
-value 1"]
-	n53 -> n54
-	n55 [label="Number
-value 2"]
-	n53 -> n55
-	n56 [label="Number
-value 4"]
-	n53 -> n56
-	n01 -> n53
-	n57 [label=Data]
-	n58 [label="Number
-value 2"]
-	n57 -> n58
-	n59 [label="Number
-value -7"]
-	n57 -> n59
-	n60 [label="Number
-value 5"]
-	n57 -> n60
-	n01 -> n57
-	n61 [label=Data]
-	n62 [label="Number
-value 1"]
-	n61 -> n62
-	n63 [label="Number
+	n37 -> i [label=var]
+	n36 -> n37 [label=left]
+	n38 [label=Variable]
+	n38 -> i [label=var]
+	n36 -> n38 [label=right]
+	n35 -> n36 [label=left]
+	n39 [label="Number
 value 3"]
-	n61 -> n63
-	n64 [label="Number
-value 4"]
-	n61 -> n64
-	n65 [label="Number
-value -7"]
-	n61 -> n65
-	n01 -> n61
-	n66 [label=END]
+	n35 -> n39 [label=right]
+	n33 -> n35 [label=expr]
+	n01 -> n33
+	n40 [label=Let]
+	n41 [label=Variable]
+	n41 -> k [label=var]
+	n40 -> n41 [label=var]
+	n42 [label="Binary
+op +"]
+	n43 [label=Variable]
+	n43 -> i [label=var]
+	n42 -> n43 [label=left]
+	n44 [label=Variable]
+	n44 -> p [label=var]
+	n42 -> n44 [label=right]
+	n40 -> n42 [label=expr]
+	n01 -> n40
+	n45 [label=If]
+	n46 [label=Logical]
+	n45 -> n46 [label=relexpr]
+	n45 -> 170 [label=lineno]
+	n01 -> n45
+	n47 [label=Let]
+	n48 [label=Variable]
+	n48 -> f [label=var]
+	n49 [label=Variable]
+	n49 -> k [label=var]
+	n48 -> n49 [label=dim1]
+	n47 -> n48 [label=var]
+	n50 [label="Number
+value 0"]
+	n47 -> n50 [label=expr]
+	n01 -> n47
+	n51 [label=Let]
+	n52 [label=Variable]
+	n52 -> k [label=var]
+	n51 -> n52 [label=var]
+	n53 [label="Binary
+op +"]
+	n54 [label=Variable]
+	n54 -> k [label=var]
+	n53 -> n54 [label=left]
+	n55 [label=Variable]
+	n55 -> p [label=var]
+	n53 -> n55 [label=right]
+	n51 -> n53 [label=expr]
+	n01 -> n51
+	n56 [label=Goto]
+	n56 -> 130 [label=lineno]
+	n01 -> n56
+	n57 [label=Let]
+	n58 [label=Variable]
+	n58 -> c [label=var]
+	n57 -> n58 [label=var]
+	n59 [label="Binary
+op +"]
+	n60 [label=Variable]
+	n60 -> c [label=var]
+	n59 -> n60 [label=left]
+	n61 [label="Number
+value 1"]
+	n59 -> n61 [label=right]
+	n57 -> n59 [label=expr]
+	n01 -> n57
+	n62 [label="Remark:p is a prime. uncomment 176 to print it"]
+	n01 -> n62
+	n63 [label="Remark:print p"]
+	n01 -> n63
+	n64 [label=Next]
+	n65 [label=Variable]
+	n65 -> i [label=var]
+	n64 -> n65
+	n01 -> n64
+	n66 [label=Print]
+	n67 [label=Variable]
+	n67 -> c [label=var]
+	n66 -> n67 [label=pitem]
+	n66 -> "," [label=pitem]
+	n68 [label="String
+value: primes"]
+	n66 -> n68 [label=expr]
 	n01 -> n66
+	n69 [label=End]
+	n01 -> n69
 }
