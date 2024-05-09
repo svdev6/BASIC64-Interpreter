@@ -14,7 +14,7 @@
 140     GOTO 210
 200     IF I <= 9 THEN 205
 202     LET I = I + 7
-205     PRINT CHR$(48 + I);
+205     PRINT ".";
 210   NEXT X
 220   PRINT
 230 NEXT Y
