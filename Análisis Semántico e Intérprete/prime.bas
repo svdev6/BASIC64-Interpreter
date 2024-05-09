@@ -21,5 +21,5 @@
 175 rem p is a prime. uncomment 176 to print it
 176 rem print p
 180 next i
-190 print c,"primes"
+190 print c; " primes"
 200 end
