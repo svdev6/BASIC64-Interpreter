@@ -2,185 +2,1661 @@ digraph AST {
 	node [color=deepskyblue shape=box style=filled]
 	edge [arrowhead=none]
 	n01 [label=Program]
-	n02 [label="Remark:prime.bas"]
+	n02 [label="Remark:    "]
 	n01 -> n02
-	n03 [label="Remark:run the sieve of erastosthenes program"]
+	n03 [label="Remark:    ELIZA/DOCTOR"]
 	n01 -> n03
-	n04 [label="Remark:this returns 1899 primes in about 1 second"]
+	n04 [label="Remark:    CREATED BY JOSEPH WEIZENBAUM"]
 	n01 -> n04
-	n05 [label="Remark:on a raspberry pi 4 running dbasic"]
+	n05 [label="Remark:    THIS VERSION BY JEFF SHRAGER"]
 	n01 -> n05
-	n06 [label=Let]
-	n07 [label=Variable]
-	n07 -> s [label=var]
-	n06 -> n07 [label=var]
-	n08 [label="Number
-value 8190"]
-	n06 -> n08 [label=expr]
+	n06 [label="Remark:    EDITED AND MODIFIED FOR DARTMOUTH BASIC BY SANTIAGO VALENCIA DIAZ"]
 	n01 -> n06
-	n09 [label=Dim]
-	n10 [label=Variable]
-	n10 -> f [label=var]
-	n11 [label="Number
-value 8191"]
-	n10 -> n11 [label=dim1]
-	n09 -> n10
+	n07 [label="Remark:    UNIVERSIDAD TECNOLOGICA DE PEREIRA, COMPILADORES 2024-1"]
+	n01 -> n07
+	n08 [label="Remark:    "]
+	n01 -> n08
+	n09 [label="Remark:    -----INITIALIZATION-----"]
 	n01 -> n09
-	n12 [label=Print]
-	n13 [label="String
-value: 1 iteration"]
-	n12 -> n13 [label=pitem]
-	n01 -> n12
-	n14 [label=Let]
-	n15 [label=Variable]
-	n15 -> c [label=var]
-	n14 -> n15 [label=var]
-	n16 [label="Number
-value 0"]
-	n14 -> n16 [label=expr]
-	n01 -> n14
-	n17 [label=For]
-	n18 [label=Variable]
-	n18 -> i [label=var]
-	n17 -> n18 [label=ident]
-	n19 [label="Number
-value 0"]
-	n17 -> n19 [label=low]
+	n10 [label=Let]
+	n11 [label=Variable]
+	n11 -> "C$" [label=var]
+	n10 -> n11 [label=var]
+	n12 [label="String
+value: "]
+	n10 -> n12 [label=expr]
+	n01 -> n10
+	n13 [label=Let]
+	n14 [label=Variable]
+	n14 -> "I$" [label=var]
+	n13 -> n14 [label=var]
+	n15 [label="String
+value: "]
+	n13 -> n15 [label=expr]
+	n01 -> n13
+	n16 [label=Let]
+	n17 [label=Variable]
+	n17 -> "K$" [label=var]
+	n16 -> n17 [label=var]
+	n18 [label="String
+value: "]
+	n16 -> n18 [label=expr]
+	n01 -> n16
+	n19 [label=Let]
 	n20 [label=Variable]
-	n20 -> s [label=var]
-	n17 -> n20 [label=top]
-	n01 -> n17
-	n21 [label=Let]
-	n22 [label=Variable]
-	n22 -> f [label=var]
+	n20 -> "F$" [label=var]
+	n19 -> n20 [label=var]
+	n21 [label="String
+value: "]
+	n19 -> n21 [label=expr]
+	n01 -> n19
+	n22 [label=Let]
 	n23 [label=Variable]
-	n23 -> i [label=var]
-	n22 -> n23 [label=dim1]
-	n21 -> n22 [label=var]
-	n24 [label="Number
-value 1"]
-	n21 -> n24 [label=expr]
-	n01 -> n21
-	n25 [label=Next]
+	n23 -> "S$" [label=var]
+	n22 -> n23 [label=var]
+	n24 [label="String
+value: "]
+	n22 -> n24 [label=expr]
+	n01 -> n22
+	n25 [label=Let]
 	n26 [label=Variable]
-	n26 -> i [label=var]
-	n25 -> n26
+	n26 -> "R$" [label=var]
+	n25 -> n26 [label=var]
+	n27 [label="String
+value: "]
+	n25 -> n27 [label=expr]
 	n01 -> n25
-	n27 [label=For]
-	n28 [label=Variable]
-	n28 -> i [label=var]
-	n27 -> n28 [label=ident]
-	n29 [label="Number
-value 0"]
-	n27 -> n29 [label=low]
-	n30 [label=Variable]
-	n30 -> s [label=var]
-	n27 -> n30 [label=top]
-	n01 -> n27
-	n31 [label=If]
-	n32 [label=Logical]
-	n31 -> n32 [label=relexpr]
-	n31 -> 180 [label=lineno]
+	n28 [label=Let]
+	n29 [label=Variable]
+	n29 -> "P$" [label=var]
+	n28 -> n29 [label=var]
+	n30 [label="String
+value: "]
+	n28 -> n30 [label=expr]
+	n01 -> n28
+	n31 [label=Let]
+	n32 [label=Variable]
+	n32 -> "Z$" [label=var]
+	n31 -> n32 [label=var]
+	n33 [label="String
+value: "]
+	n31 -> n33 [label=expr]
 	n01 -> n31
-	n33 [label=Let]
-	n34 [label=Variable]
-	n34 -> p [label=var]
-	n33 -> n34 [label=var]
-	n35 [label="Binary
-op +"]
-	n36 [label="Binary
-op +"]
-	n37 [label=Variable]
-	n37 -> i [label=var]
-	n36 -> n37 [label=left]
+	n34 [label=Dim]
+	n35 [label=Variable]
+	n35 -> S [label=var]
+	n36 [label="Number
+value 36"]
+	n35 -> n36 [label=dim1]
+	n34 -> n35
+	n01 -> n34
+	n37 [label=Dim]
 	n38 [label=Variable]
-	n38 -> i [label=var]
-	n36 -> n38 [label=right]
-	n35 -> n36 [label=left]
+	n38 -> R [label=var]
 	n39 [label="Number
-value 3"]
-	n35 -> n39 [label=right]
-	n33 -> n35 [label=expr]
-	n01 -> n33
-	n40 [label=Let]
+value 36"]
+	n38 -> n39 [label=dim1]
+	n37 -> n38
+	n01 -> n37
+	n40 [label=Dim]
 	n41 [label=Variable]
-	n41 -> k [label=var]
-	n40 -> n41 [label=var]
-	n42 [label="Binary
-op +"]
-	n43 [label=Variable]
-	n43 -> i [label=var]
-	n42 -> n43 [label=left]
-	n44 [label=Variable]
-	n44 -> p [label=var]
-	n42 -> n44 [label=right]
-	n40 -> n42 [label=expr]
+	n41 -> N [label=var]
+	n42 [label="Number
+value 36"]
+	n41 -> n42 [label=dim1]
+	n40 -> n41
 	n01 -> n40
-	n45 [label=If]
-	n46 [label=Logical]
-	n45 -> n46 [label=relexpr]
-	n45 -> 170 [label=lineno]
-	n01 -> n45
-	n47 [label=Let]
-	n48 [label=Variable]
-	n48 -> f [label=var]
-	n49 [label=Variable]
-	n49 -> k [label=var]
-	n48 -> n49 [label=dim1]
-	n47 -> n48 [label=var]
-	n50 [label="Number
-value 0"]
-	n47 -> n50 [label=expr]
-	n01 -> n47
-	n51 [label=Let]
-	n52 [label=Variable]
-	n52 -> k [label=var]
-	n51 -> n52 [label=var]
-	n53 [label="Binary
-op +"]
-	n54 [label=Variable]
-	n54 -> k [label=var]
-	n53 -> n54 [label=left]
-	n55 [label=Variable]
-	n55 -> p [label=var]
-	n53 -> n55 [label=right]
-	n51 -> n53 [label=expr]
-	n01 -> n51
-	n56 [label=Goto]
-	n56 -> 130 [label=lineno]
-	n01 -> n56
-	n57 [label=Let]
-	n58 [label=Variable]
-	n58 -> c [label=var]
-	n57 -> n58 [label=var]
-	n59 [label="Binary
-op +"]
-	n60 [label=Variable]
-	n60 -> c [label=var]
-	n59 -> n60 [label=left]
-	n61 [label="Number
+	n43 [label=Let]
+	n44 [label=Variable]
+	n44 -> N1 [label=var]
+	n43 -> n44 [label=var]
+	n45 [label="Number
+value 36"]
+	n43 -> n45 [label=expr]
+	n01 -> n43
+	n46 [label=Let]
+	n47 [label=Variable]
+	n47 -> N2 [label=var]
+	n46 -> n47 [label=var]
+	n48 [label="Number
+value 12"]
+	n46 -> n48 [label=expr]
+	n01 -> n46
+	n49 [label=Let]
+	n50 [label=Variable]
+	n50 -> N3 [label=var]
+	n49 -> n50 [label=var]
+	n51 [label="Number
+value 112"]
+	n49 -> n51 [label=expr]
+	n01 -> n49
+	n52 [label=For]
+	n53 [label=Variable]
+	n53 -> X [label=var]
+	n52 -> n53 [label=ident]
+	n54 [label="Number
 value 1"]
-	n59 -> n61 [label=right]
-	n57 -> n59 [label=expr]
-	n01 -> n57
-	n62 [label="Remark:p is a prime. uncomment 176 to print it"]
+	n52 -> n54 [label=low]
+	n55 [label="Binary
+op +"]
+	n56 [label="Binary
+op +"]
+	n57 [label=Variable]
+	n57 -> N1 [label=var]
+	n56 -> n57 [label=left]
+	n58 [label=Variable]
+	n58 -> N2 [label=var]
+	n56 -> n58 [label=right]
+	n55 -> n56 [label=left]
+	n59 [label=Variable]
+	n59 -> N3 [label=var]
+	n55 -> n59 [label=right]
+	n52 -> n55 [label=top]
+	n01 -> n52
+	n60 [label=Read]
+	n61 [label=Variable]
+	n61 -> "Z$" [label=var]
+	n60 -> n61
+	n01 -> n60
+	n62 [label=Next]
+	n63 [label=Variable]
+	n63 -> X [label=var]
+	n62 -> n63
 	n01 -> n62
-	n63 [label="Remark:print p"]
-	n01 -> n63
-	n64 [label=Next]
-	n65 [label=Variable]
-	n65 -> i [label=var]
-	n64 -> n65
+	n64 [label="Remark:SAME AS RESTORE"]
 	n01 -> n64
-	n66 [label=Print]
-	n67 [label=Variable]
-	n67 -> c [label=var]
-	n66 -> n67 [label=pitem]
-	n66 -> "," [label=pitem]
-	n68 [label="String
-value: primes"]
-	n66 -> n68 [label=expr]
-	n01 -> n66
-	n69 [label=End]
+	n65 [label=For]
+	n66 [label=Variable]
+	n66 -> X [label=var]
+	n65 -> n66 [label=ident]
+	n67 [label="Number
+value 1"]
+	n65 -> n67 [label=low]
+	n68 [label=Variable]
+	n68 -> N1 [label=var]
+	n65 -> n68 [label=top]
+	n01 -> n65
+	n69 [label=Read]
+	n70 [label=Variable]
+	n70 -> S [label=var]
+	n71 [label=Variable]
+	n71 -> X [label=var]
+	n70 -> n71 [label=dim1]
+	n69 -> n70
+	n72 [label=Variable]
+	n72 -> L [label=var]
+	n69 -> n72
 	n01 -> n69
+	n73 [label=Let]
+	n74 [label=Variable]
+	n74 -> R [label=var]
+	n75 [label=Variable]
+	n75 -> X [label=var]
+	n74 -> n75 [label=dim1]
+	n73 -> n74 [label=var]
+	n76 [label=Variable]
+	n76 -> S [label=var]
+	n77 [label=Variable]
+	n77 -> X [label=var]
+	n76 -> n77 [label=dim1]
+	n73 -> n76 [label=expr]
+	n01 -> n73
+	n78 [label=Let]
+	n79 [label=Variable]
+	n79 -> N [label=var]
+	n80 [label=Variable]
+	n80 -> X [label=var]
+	n79 -> n80 [label=dim1]
+	n78 -> n79 [label=var]
+	n81 [label="Binary
+op -"]
+	n82 [label="Binary
+op +"]
+	n83 [label=Variable]
+	n83 -> S [label=var]
+	n84 [label=Variable]
+	n84 -> X [label=var]
+	n83 -> n84 [label=dim1]
+	n82 -> n83 [label=left]
+	n85 [label=Variable]
+	n85 -> L [label=var]
+	n82 -> n85 [label=right]
+	n81 -> n82 [label=left]
+	n86 [label="Number
+value 1"]
+	n81 -> n86 [label=right]
+	n78 -> n81 [label=expr]
+	n01 -> n78
+	n87 [label=Next]
+	n88 [label=Variable]
+	n88 -> X [label=var]
+	n87 -> n88
+	n01 -> n87
+	n89 [label=Print]
+	n90 [label="String
+value: HI!  I'M ELIZA.  WHAT'S YOUR PROBLEM?"]
+	n89 -> n90 [label=pitem]
+	n01 -> n89
+	n91 [label="Remark:    "]
+	n01 -> n91
+	n92 [label="Remark:    -----USER INPUT SECTION-----"]
+	n01 -> n92
+	n93 [label="Remark:    "]
+	n01 -> n93
+	n94 [label="Input
+label: (None, None)"]
+	n95 [label=Variable]
+	n95 -> "I$" [label=var]
+	n94 -> n95 [label=var]
+	n01 -> n94
+	n96 [label=Let]
+	n97 [label=Variable]
+	n97 -> "I$" [label=var]
+	n96 -> n97 [label=var]
+	n98 [label="Binary
+op +"]
+	n99 [label="Binary
+op +"]
+	n100 [label="String
+value:  "]
+	n99 -> n100 [label=left]
+	n101 [label=Variable]
+	n101 -> "I$" [label=var]
+	n99 -> n101 [label=right]
+	n98 -> n99 [label=left]
+	n102 [label="String
+value:   "]
+	n98 -> n102 [label=right]
+	n96 -> n98 [label=expr]
+	n01 -> n96
+	n103 [label="Remark:GET RID OF APOSTROPHES"]
+	n01 -> n103
+	n104 [label=For]
+	n105 [label=Variable]
+	n105 -> L [label=var]
+	n104 -> n105 [label=ident]
+	n106 [label="Number
+value 1"]
+	n104 -> n106 [label=low]
+	n107 [label="Bltin
+name: LEN"]
+	n108 [label=Variable]
+	n108 -> "I$" [label=var]
+	n107 -> n108 [label=expr]
+	n104 -> n107 [label=top]
+	n01 -> n104
+	n109 [label=If]
+	n110 [label=Logical]
+	n109 -> n110 [label=relexpr]
+	n109 -> 240 [label=lineno]
+	n01 -> n109
+	n111 [label=Let]
+	n112 [label=Variable]
+	n112 -> "I$" [label=var]
+	n111 -> n112 [label=var]
+	n113 [label="Binary
+op +"]
+	n114 [label="Bltin
+name: LEFT$"]
+	n115 [label=Variable]
+	n115 -> "I$" [label=var]
+	n114 -> n115 [label=expr]
+	n116 [label="Binary
+op -"]
+	n117 [label=Variable]
+	n117 -> L [label=var]
+	n116 -> n117 [label=left]
+	n118 [label="Number
+value 1"]
+	n116 -> n118 [label=right]
+	n114 -> n116 [label=expr]
+	n113 -> n114 [label=left]
+	n119 [label="Bltin
+name: RIGHT$"]
+	n120 [label=Variable]
+	n120 -> "I$" [label=var]
+	n119 -> n120 [label=expr]
+	n121 [label="Binary
+op -"]
+	n122 [label="Bltin
+name: LEN"]
+	n123 [label=Variable]
+	n123 -> "I$" [label=var]
+	n122 -> n123 [label=expr]
+	n121 -> n122 [label=left]
+	n124 [label=Variable]
+	n124 -> L [label=var]
+	n121 -> n124 [label=right]
+	n119 -> n121 [label=expr]
+	n113 -> n119 [label=right]
+	n111 -> n113 [label=expr]
+	n01 -> n111
+	n125 [label=Goto]
+	n125 -> 230 [label=lineno]
+	n01 -> n125
+	n126 [label=If]
+	n127 [label=Logical]
+	n126 -> n127 [label=relexpr]
+	n126 -> 250 [label=lineno]
+	n01 -> n126
+	n128 [label=If]
+	n129 [label=Logical]
+	n128 -> n129 [label=relexpr]
+	n128 -> 250 [label=lineno]
+	n01 -> n128
+	n130 [label=Print]
+	n131 [label="String
+value: SHUT UP..."]
+	n130 -> n131 [label=pitem]
+	n01 -> n130
+	n132 [label=Goto]
+	n132 -> 2570 [label=lineno]
+	n01 -> n132
+	n133 [label=Next]
+	n134 [label=Variable]
+	n134 -> L [label=var]
+	n133 -> n134
+	n01 -> n133
+	n135 [label=If]
+	n136 [label=Logical]
+	n135 -> n136 [label=relexpr]
+	n135 -> 260 [label=lineno]
+	n01 -> n135
+	n137 [label=Print]
+	n138 [label="String
+value: PLEASE DON'T REPEAT YOURSELF!"]
+	n137 -> n138 [label=pitem]
+	n01 -> n137
+	n139 [label=Goto]
+	n139 -> 170 [label=lineno]
+	n01 -> n139
+	n140 [label="Remark:"]
+	n01 -> n140
+	n141 [label="Remark:    -----FIND KEYWORD IN I$-----"]
+	n01 -> n141
+	n142 [label="Remark:"]
+	n01 -> n142
+	n143 [label=RESTORE]
+	n01 -> n143
+	n144 [label=Let]
+	n145 [label=Variable]
+	n145 -> S [label=var]
+	n144 -> n145 [label=var]
+	n146 [label="Number
+value 0"]
+	n144 -> n146 [label=expr]
+	n01 -> n144
+	n147 [label=For]
+	n148 [label=Variable]
+	n148 -> K [label=var]
+	n147 -> n148 [label=ident]
+	n149 [label="Number
+value 1"]
+	n147 -> n149 [label=low]
+	n150 [label=Variable]
+	n150 -> N1 [label=var]
+	n147 -> n150 [label=top]
+	n01 -> n147
+	n151 [label=Read]
+	n152 [label=Variable]
+	n152 -> "K$" [label=var]
+	n151 -> n152
+	n01 -> n151
+	n153 [label=If]
+	n154 [label=Logical]
+	n153 -> n154 [label=relexpr]
+	n153 -> 360 [label=lineno]
+	n01 -> n153
+	n155 [label=For]
+	n156 [label=Variable]
+	n156 -> L [label=var]
+	n155 -> n156 [label=ident]
+	n157 [label="Number
+value 1"]
+	n155 -> n157 [label=low]
+	n158 [label="Binary
+op +"]
+	n159 [label="Binary
+op -"]
+	n160 [label="Bltin
+name: LEN"]
+	n161 [label=Variable]
+	n161 -> "I$" [label=var]
+	n160 -> n161 [label=expr]
+	n159 -> n160 [label=left]
+	n162 [label="Bltin
+name: LEN"]
+	n163 [label=Variable]
+	n163 -> "K$" [label=var]
+	n162 -> n163 [label=expr]
+	n159 -> n162 [label=right]
+	n158 -> n159 [label=left]
+	n164 [label="Number
+value 1"]
+	n158 -> n164 [label=right]
+	n155 -> n158 [label=top]
+	n01 -> n155
+	n165 [label=If]
+	n166 [label=Logical]
+	n165 -> n166 [label=relexpr]
+	n165 -> 350 [label=lineno]
+	n01 -> n165
+	n167 [label=Let]
+	n168 [label=Variable]
+	n168 -> S [label=var]
+	n167 -> n168 [label=var]
+	n169 [label=Variable]
+	n169 -> K [label=var]
+	n167 -> n169 [label=expr]
+	n01 -> n167
+	n170 [label=Let]
+	n171 [label=Variable]
+	n171 -> T [label=var]
+	n170 -> n171 [label=var]
+	n172 [label=Variable]
+	n172 -> L [label=var]
+	n170 -> n172 [label=expr]
+	n01 -> n170
+	n173 [label=Let]
+	n174 [label=Variable]
+	n174 -> "F$" [label=var]
+	n173 -> n174 [label=var]
+	n175 [label=Variable]
+	n175 -> "K$" [label=var]
+	n173 -> n175 [label=expr]
+	n01 -> n173
+	n176 [label=Next]
+	n177 [label=Variable]
+	n177 -> L [label=var]
+	n176 -> n177
+	n01 -> n176
+	n178 [label=Next]
+	n179 [label=Variable]
+	n179 -> K [label=var]
+	n178 -> n179
+	n01 -> n178
+	n180 [label=If]
+	n181 [label=Logical]
+	n180 -> n181 [label=relexpr]
+	n180 -> 370 [label=lineno]
+	n01 -> n180
+	n182 [label=Let]
+	n183 [label=Variable]
+	n183 -> K [label=var]
+	n182 -> n183 [label=var]
+	n184 [label=Variable]
+	n184 -> S [label=var]
+	n182 -> n184 [label=expr]
+	n01 -> n182
+	n185 [label=Let]
+	n186 [label=Variable]
+	n186 -> L [label=var]
+	n185 -> n186 [label=var]
+	n187 [label=Variable]
+	n187 -> T [label=var]
+	n185 -> n187 [label=expr]
+	n01 -> n185
+	n188 [label=Goto]
+	n188 -> 390 [label=lineno]
+	n01 -> n188
+	n189 [label=Let]
+	n190 [label=Variable]
+	n190 -> K [label=var]
+	n189 -> n190 [label=var]
+	n191 [label="Number
+value 36"]
+	n189 -> n191 [label=expr]
+	n01 -> n189
+	n192 [label=Goto]
+	n192 -> 570 [label=lineno]
+	n01 -> n192
+	n193 [label="Remark:    WE DIDN'T FIND ANY KEYWORDS"]
+	n01 -> n193
+	n194 [label="Remark:    "]
+	n01 -> n194
+	n195 [label="Remark:    TAKE RIGHT PART OF STRING AND CONJUGATE IT"]
+	n01 -> n195
+	n196 [label="Remark:    USING THE LIST OF STRINGS TO BE SWAPPED"]
+	n01 -> n196
+	n197 [label="Remark:    "]
+	n01 -> n197
+	n198 [label=RESTORE]
+	n01 -> n198
+	n199 [label=For]
+	n200 [label=Variable]
+	n200 -> X [label=var]
+	n199 -> n200 [label=ident]
+	n201 [label="Number
+value 1"]
+	n199 -> n201 [label=low]
+	n202 [label=Variable]
+	n202 -> N1 [label=var]
+	n199 -> n202 [label=top]
+	n01 -> n199
+	n203 [label=Read]
+	n204 [label=Variable]
+	n204 -> "Z$" [label=var]
+	n203 -> n204
+	n01 -> n203
+	n205 [label=Next]
+	n206 [label=Variable]
+	n206 -> X [label=var]
+	n205 -> n206
+	n01 -> n205
+	n207 [label="Remark:SKIP OVER KEYWORDS"]
+	n01 -> n207
+	n208 [label=Let]
+	n209 [label=Variable]
+	n209 -> "C$" [label=var]
+	n208 -> n209 [label=var]
+	n210 [label="Binary
+op +"]
+	n211 [label="String
+value:  "]
+	n210 -> n211 [label=left]
+	n212 [label="Bltin
+name: RIGHT$"]
+	n213 [label=Variable]
+	n213 -> "I$" [label=var]
+	n212 -> n213 [label=expr]
+	n214 [label="Binary
+op +"]
+	n215 [label="Binary
+op -"]
+	n216 [label="Binary
+op -"]
+	n217 [label="Bltin
+name: LEN"]
+	n218 [label=Variable]
+	n218 -> "I$" [label=var]
+	n217 -> n218 [label=expr]
+	n216 -> n217 [label=left]
+	n219 [label="Bltin
+name: LEN"]
+	n220 [label=Variable]
+	n220 -> "F$" [label=var]
+	n219 -> n220 [label=expr]
+	n216 -> n219 [label=right]
+	n215 -> n216 [label=left]
+	n221 [label=Variable]
+	n221 -> L [label=var]
+	n215 -> n221 [label=right]
+	n214 -> n215 [label=left]
+	n222 [label="Number
+value 1"]
+	n214 -> n222 [label=right]
+	n212 -> n214 [label=expr]
+	n210 -> n212 [label=right]
+	n208 -> n210 [label=expr]
+	n01 -> n208
+	n223 [label=For]
+	n224 [label=Variable]
+	n224 -> X [label=var]
+	n223 -> n224 [label=ident]
+	n225 [label="Number
+value 1"]
+	n223 -> n225 [label=low]
+	n226 [label="Binary
+op /"]
+	n227 [label=Variable]
+	n227 -> N2 [label=var]
+	n226 -> n227 [label=left]
+	n228 [label="Number
+value 2"]
+	n226 -> n228 [label=right]
+	n223 -> n226 [label=top]
+	n01 -> n223
+	n229 [label=Read]
+	n230 [label=Variable]
+	n230 -> "S$" [label=var]
+	n229 -> n230
+	n231 [label=Variable]
+	n231 -> "R$" [label=var]
+	n229 -> n231
+	n01 -> n229
+	n232 [label=For]
+	n233 [label=Variable]
+	n233 -> L [label=var]
+	n232 -> n233 [label=ident]
+	n234 [label="Number
+value 1"]
+	n232 -> n234 [label=low]
+	n235 [label="Bltin
+name: LEN"]
+	n236 [label=Variable]
+	n236 -> "C$" [label=var]
+	n235 -> n236 [label=expr]
+	n232 -> n235 [label=top]
+	n01 -> n232
+	n237 [label=If]
+	n238 [label=Logical]
+	n237 -> n238 [label=relexpr]
+	n237 -> 510 [label=lineno]
+	n01 -> n237
+	n239 [label=If]
+	n240 [label=Logical]
+	n239 -> n240 [label=relexpr]
+	n239 -> 510 [label=lineno]
+	n01 -> n239
+	n241 [label=Let]
+	n242 [label=Variable]
+	n242 -> "C$" [label=var]
+	n241 -> n242 [label=var]
+	n243 [label="Binary
+op +"]
+	n244 [label="Binary
+op +"]
+	n245 [label="Bltin
+name: LEFT$"]
+	n246 [label=Variable]
+	n246 -> "C$" [label=var]
+	n245 -> n246 [label=expr]
+	n247 [label="Binary
+op -"]
+	n248 [label=Variable]
+	n248 -> L [label=var]
+	n247 -> n248 [label=left]
+	n249 [label="Number
+value 1"]
+	n247 -> n249 [label=right]
+	n245 -> n247 [label=expr]
+	n244 -> n245 [label=left]
+	n250 [label=Variable]
+	n250 -> "R$" [label=var]
+	n244 -> n250 [label=right]
+	n243 -> n244 [label=left]
+	n251 [label="Bltin
+name: RIGHT$"]
+	n252 [label=Variable]
+	n252 -> "C$" [label=var]
+	n251 -> n252 [label=expr]
+	n253 [label="Binary
+op +"]
+	n254 [label="Binary
+op -"]
+	n255 [label="Binary
+op -"]
+	n256 [label="Bltin
+name: LEN"]
+	n257 [label=Variable]
+	n257 -> "C$" [label=var]
+	n256 -> n257 [label=expr]
+	n255 -> n256 [label=left]
+	n258 [label=Variable]
+	n258 -> L [label=var]
+	n255 -> n258 [label=right]
+	n254 -> n255 [label=left]
+	n259 [label="Bltin
+name: LEN"]
+	n260 [label=Variable]
+	n260 -> "S$" [label=var]
+	n259 -> n260 [label=expr]
+	n254 -> n259 [label=right]
+	n253 -> n254 [label=left]
+	n261 [label="Number
+value 1"]
+	n253 -> n261 [label=right]
+	n251 -> n253 [label=expr]
+	n243 -> n251 [label=right]
+	n241 -> n243 [label=expr]
+	n01 -> n241
+	n262 [label=Let]
+	n263 [label=Variable]
+	n263 -> L [label=var]
+	n262 -> n263 [label=var]
+	n264 [label="Binary
+op +"]
+	n265 [label=Variable]
+	n265 -> L [label=var]
+	n264 -> n265 [label=left]
+	n266 [label="Bltin
+name: LEN"]
+	n267 [label=Variable]
+	n267 -> "R$" [label=var]
+	n266 -> n267 [label=expr]
+	n264 -> n266 [label=right]
+	n262 -> n264 [label=expr]
+	n01 -> n262
+	n268 [label=Goto]
+	n268 -> 540 [label=lineno]
+	n01 -> n268
+	n269 [label=If]
+	n270 [label=Logical]
+	n269 -> n270 [label=relexpr]
+	n269 -> 540 [label=lineno]
+	n01 -> n269
+	n271 [label=If]
+	n272 [label=Logical]
+	n271 -> n272 [label=relexpr]
+	n271 -> 540 [label=lineno]
+	n01 -> n271
+	n273 [label=Let]
+	n274 [label=Variable]
+	n274 -> "C$" [label=var]
+	n273 -> n274 [label=var]
+	n275 [label="Binary
+op +"]
+	n276 [label="Binary
+op +"]
+	n277 [label="Bltin
+name: LEFT$"]
+	n278 [label=Variable]
+	n278 -> "C$" [label=var]
+	n277 -> n278 [label=expr]
+	n279 [label="Binary
+op -"]
+	n280 [label=Variable]
+	n280 -> L [label=var]
+	n279 -> n280 [label=left]
+	n281 [label="Number
+value 1"]
+	n279 -> n281 [label=right]
+	n277 -> n279 [label=expr]
+	n276 -> n277 [label=left]
+	n282 [label=Variable]
+	n282 -> "S$" [label=var]
+	n276 -> n282 [label=right]
+	n275 -> n276 [label=left]
+	n283 [label="Bltin
+name: RIGHT$"]
+	n284 [label=Variable]
+	n284 -> "C$" [label=var]
+	n283 -> n284 [label=expr]
+	n285 [label="Binary
+op +"]
+	n286 [label="Binary
+op -"]
+	n287 [label="Binary
+op -"]
+	n288 [label="Bltin
+name: LEN"]
+	n289 [label=Variable]
+	n289 -> "C$" [label=var]
+	n288 -> n289 [label=expr]
+	n287 -> n288 [label=left]
+	n290 [label=Variable]
+	n290 -> L [label=var]
+	n287 -> n290 [label=right]
+	n286 -> n287 [label=left]
+	n291 [label="Bltin
+name: LEN"]
+	n292 [label=Variable]
+	n292 -> "R$" [label=var]
+	n291 -> n292 [label=expr]
+	n286 -> n291 [label=right]
+	n285 -> n286 [label=left]
+	n293 [label="Number
+value 1"]
+	n285 -> n293 [label=right]
+	n283 -> n285 [label=expr]
+	n275 -> n283 [label=right]
+	n273 -> n275 [label=expr]
+	n01 -> n273
+	n294 [label=Let]
+	n295 [label=Variable]
+	n295 -> L [label=var]
+	n294 -> n295 [label=var]
+	n296 [label="Binary
+op +"]
+	n297 [label=Variable]
+	n297 -> L [label=var]
+	n296 -> n297 [label=left]
+	n298 [label="Bltin
+name: LEN"]
+	n299 [label=Variable]
+	n299 -> "S$" [label=var]
+	n298 -> n299 [label=expr]
+	n296 -> n298 [label=right]
+	n294 -> n296 [label=expr]
+	n01 -> n294
+	n300 [label=Next]
+	n301 [label=Variable]
+	n301 -> L [label=var]
+	n300 -> n301
+	n01 -> n300
+	n302 [label=Next]
+	n303 [label=Variable]
+	n303 -> X [label=var]
+	n302 -> n303
+	n01 -> n302
+	n304 [label=If]
+	n305 [label=Logical]
+	n304 -> n305 [label=relexpr]
+	n304 -> 560 [label=lineno]
+	n01 -> n304
+	n306 [label=Let]
+	n307 [label=Variable]
+	n307 -> "C$" [label=var]
+	n306 -> n307 [label=var]
+	n308 [label="Bltin
+name: RIGHT$"]
+	n309 [label=Variable]
+	n309 -> "C$" [label=var]
+	n308 -> n309 [label=expr]
+	n310 [label="Binary
+op -"]
+	n311 [label="Bltin
+name: LEN"]
+	n312 [label=Variable]
+	n312 -> "C$" [label=var]
+	n311 -> n312 [label=expr]
+	n310 -> n311 [label=left]
+	n313 [label="Number
+value 1"]
+	n310 -> n313 [label=right]
+	n308 -> n310 [label=expr]
+	n306 -> n308 [label=expr]
+	n01 -> n306
+	n314 [label="Remark:ONLY 1 SPACE"]
+	n01 -> n314
+	n315 [label="Remark:"]
+	n01 -> n315
+	n316 [label="Remark:    NOW USING THE KEYWORD NUMBER (K) GET REPLY"]
+	n01 -> n316
+	n317 [label="Remark:"]
+	n01 -> n317
+	n318 [label=RESTORE]
+	n01 -> n318
+	n319 [label=For]
+	n320 [label=Variable]
+	n320 -> X [label=var]
+	n319 -> n320 [label=ident]
+	n321 [label="Number
+value 1"]
+	n319 -> n321 [label=low]
+	n322 [label="Binary
+op +"]
+	n323 [label=Variable]
+	n323 -> N1 [label=var]
+	n322 -> n323 [label=left]
+	n324 [label=Variable]
+	n324 -> N2 [label=var]
+	n322 -> n324 [label=right]
+	n319 -> n322 [label=top]
+	n01 -> n319
+	n325 [label=Read]
+	n326 [label=Variable]
+	n326 -> "Z$" [label=var]
+	n325 -> n326
+	n01 -> n325
+	n327 [label=Next]
+	n328 [label=Variable]
+	n328 -> X [label=var]
+	n327 -> n328
+	n01 -> n327
+	n329 [label=For]
+	n330 [label=Variable]
+	n330 -> X [label=var]
+	n329 -> n330 [label=ident]
+	n331 [label="Number
+value 1"]
+	n329 -> n331 [label=low]
+	n332 [label=Variable]
+	n332 -> R [label=var]
+	n333 [label=Variable]
+	n333 -> K [label=var]
+	n332 -> n333 [label=dim1]
+	n329 -> n332 [label=top]
+	n01 -> n329
+	n334 [label=Read]
+	n335 [label=Variable]
+	n335 -> "F$" [label=var]
+	n334 -> n335
+	n01 -> n334
+	n336 [label=Next]
+	n337 [label=Variable]
+	n337 -> X [label=var]
+	n336 -> n337
+	n01 -> n336
+	n338 [label="Remark:READ RIGHT REPLY"]
+	n01 -> n338
+	n339 [label=Let]
+	n340 [label=Variable]
+	n340 -> R [label=var]
+	n341 [label=Variable]
+	n341 -> K [label=var]
+	n340 -> n341 [label=dim1]
+	n339 -> n340 [label=var]
+	n342 [label="Binary
+op +"]
+	n343 [label=Variable]
+	n343 -> R [label=var]
+	n344 [label=Variable]
+	n344 -> K [label=var]
+	n343 -> n344 [label=dim1]
+	n342 -> n343 [label=left]
+	n345 [label="Number
+value 1"]
+	n342 -> n345 [label=right]
+	n339 -> n342 [label=expr]
+	n01 -> n339
+	n346 [label=If]
+	n347 [label=Logical]
+	n346 -> n347 [label=relexpr]
+	n346 -> 620 [label=lineno]
+	n01 -> n346
+	n348 [label=Let]
+	n349 [label=Variable]
+	n349 -> R [label=var]
+	n350 [label=Variable]
+	n350 -> K [label=var]
+	n349 -> n350 [label=dim1]
+	n348 -> n349 [label=var]
+	n351 [label=Variable]
+	n351 -> S [label=var]
+	n352 [label=Variable]
+	n352 -> K [label=var]
+	n351 -> n352 [label=dim1]
+	n348 -> n351 [label=expr]
+	n01 -> n348
+	n353 [label=If]
+	n354 [label=Logical]
+	n353 -> n354 [label=relexpr]
+	n353 -> 630 [label=lineno]
+	n01 -> n353
+	n355 [label=Print]
+	n356 [label=Variable]
+	n356 -> "F$" [label=var]
+	n355 -> n356 [label=pitem]
+	n01 -> n355
+	n357 [label=Let]
+	n358 [label=Variable]
+	n358 -> "P$" [label=var]
+	n357 -> n358 [label=var]
+	n359 [label=Variable]
+	n359 -> "I$" [label=var]
+	n357 -> n359 [label=expr]
+	n01 -> n357
+	n360 [label=Goto]
+	n360 -> 170 [label=lineno]
+	n01 -> n360
+	n361 [label=Print]
+	n362 [label="Bltin
+name: LEFT$"]
+	n363 [label=Variable]
+	n363 -> "F$" [label=var]
+	n362 -> n363 [label=expr]
+	n364 [label="Binary
+op -"]
+	n365 [label="Bltin
+name: LEN"]
+	n366 [label=Variable]
+	n366 -> "F$" [label=var]
+	n365 -> n366 [label=expr]
+	n364 -> n365 [label=left]
+	n367 [label="Number
+value 1"]
+	n364 -> n367 [label=right]
+	n362 -> n364 [label=expr]
+	n361 -> n362 [label=pitem]
+	n361 -> ";" [label=pitem]
+	n368 [label=Variable]
+	n368 -> "C$" [label=var]
+	n361 -> n368 [label=expr]
+	n01 -> n361
+	n369 [label=Let]
+	n370 [label=Variable]
+	n370 -> "P$" [label=var]
+	n369 -> n370 [label=var]
+	n371 [label=Variable]
+	n371 -> "I$" [label=var]
+	n369 -> n371 [label=expr]
+	n01 -> n369
+	n372 [label=Goto]
+	n372 -> 170 [label=lineno]
+	n01 -> n372
+	n373 [label="Remark:"]
+	n01 -> n373
+	n374 [label="Remark:    -----PROGRAM DATA FOLLOWS-----"]
+	n01 -> n374
+	n375 [label="Remark:"]
+	n01 -> n375
+	n376 [label="Remark:    KEYWORDS"]
+	n01 -> n376
+	n377 [label="Remark:"]
+	n01 -> n377
+	n378 [label=Data]
+	n378 -> "CAN YOU" [label=string_data]
+	n378 -> "CAN I" [label=string_data]
+	n378 -> "YOU ARE" [label=string_data]
+	n378 -> YOURE [label=string_data]
+	n378 -> "I DONT" [label=string_data]
+	n378 -> "I FEEL" [label=string_data]
+	n01 -> n378
+	n379 [label=Data]
+	n379 -> "WHY DONT YOU" [label=string_data]
+	n379 -> "WHY CANT I" [label=string_data]
+	n379 -> "ARE YOU" [label=string_data]
+	n379 -> "I CANT" [label=string_data]
+	n379 -> "I AM" [label=string_data]
+	n379 -> "IM " [label=string_data]
+	n01 -> n379
+	n380 [label=Data]
+	n380 -> "YOU " [label=string_data]
+	n380 -> "I WANT" [label=string_data]
+	n380 -> WHAT [label=string_data]
+	n380 -> HOW [label=string_data]
+	n380 -> WHO [label=string_data]
+	n380 -> WHERE [label=string_data]
+	n380 -> WHEN [label=string_data]
+	n380 -> WHY [label=string_data]
+	n01 -> n380
+	n381 [label=Data]
+	n381 -> NAME [label=string_data]
+	n381 -> CAUSE [label=string_data]
+	n381 -> SORRY [label=string_data]
+	n381 -> DREAM [label=string_data]
+	n381 -> HELLO [label=string_data]
+	n381 -> "HI " [label=string_data]
+	n381 -> MAYBE [label=string_data]
+	n01 -> n381
+	n382 [label=Data]
+	n382 -> " NO" [label=string_data]
+	n382 -> YOUR [label=string_data]
+	n382 -> ALWAYS [label=string_data]
+	n382 -> THINK [label=string_data]
+	n382 -> ALIKE [label=string_data]
+	n382 -> YES [label=string_data]
+	n382 -> FRIEND [label=string_data]
+	n01 -> n382
+	n383 [label=Data]
+	n383 -> COMPUTER [label=string_data]
+	n383 -> NOKEYFOUND [label=string_data]
+	n01 -> n383
+	n384 [label="Remark:"]
+	n01 -> n384
+	n385 [label="Remark:    STRING DATA FOR CONJUGATIONS"]
+	n01 -> n385
+	n386 [label="Remark:"]
+	n01 -> n386
+	n387 [label=Data]
+	n387 -> " ARE " [label=string_data]
+	n387 -> " AM " [label=string_data]
+	n387 -> "WERE " [label=string_data]
+	n387 -> "WAS " [label=string_data]
+	n387 -> " YOU " [label=string_data]
+	n387 -> " I " [label=string_data]
+	n387 -> "YOUR " [label=string_data]
+	n387 -> "MY " [label=string_data]
+	n01 -> n387
+	n388 [label=Data]
+	n388 -> " IVE " [label=string_data]
+	n388 -> " YOUVE " [label=string_data]
+	n388 -> " IM " [label=string_data]
+	n388 -> " YOURE " [label=string_data]
+	n01 -> n388
+	n389 [label="Remark:"]
+	n01 -> n389
+	n390 [label="Remark:    REPLIES"]
+	n01 -> n390
+	n391 [label="Remark:"]
+	n01 -> n391
+	n392 [label=Data]
+	n392 -> "DON'T YOU BELIEVE THAT I CAN*" [label=string_data]
+	n01 -> n392
+	n393 [label=Data]
+	n393 -> "PERHAPS YOU WOULD LIKE TO BE ABLE TO*" [label=string_data]
+	n01 -> n393
+	n394 [label=Data]
+	n394 -> "YOU WANT ME TO BE ABLE TO*" [label=string_data]
+	n01 -> n394
+	n395 [label=Data]
+	n395 -> "PERHAPS YOU DON'T WANT TO*" [label=string_data]
+	n01 -> n395
+	n396 [label=Data]
+	n396 -> "DO YOU WANT TO BE ABLE TO*" [label=string_data]
+	n01 -> n396
+	n397 [label=Data]
+	n397 -> "WHAT MAKES YOU THINK I AM*" [label=string_data]
+	n01 -> n397
+	n398 [label=Data]
+	n398 -> "DOES IT PLEASE YOU TO BELIEVE I AM*" [label=string_data]
+	n01 -> n398
+	n399 [label=Data]
+	n399 -> "PERHAPS YOU WOULD LIKE TO BE*" [label=string_data]
+	n01 -> n399
+	n400 [label=Data]
+	n400 -> "DO YOU SOMETIMES WISH YOU WERE*" [label=string_data]
+	n01 -> n400
+	n401 [label=Data]
+	n401 -> "DON'T YOU REALLY*" [label=string_data]
+	n01 -> n401
+	n402 [label=Data]
+	n402 -> "WHY DON'T YOU*" [label=string_data]
+	n01 -> n402
+	n403 [label=Data]
+	n403 -> "DO YOU WISH TO BE ABLE TO*" [label=string_data]
+	n01 -> n403
+	n404 [label=Data]
+	n404 -> "DOES THAT TROUBLE YOU?" [label=string_data]
+	n01 -> n404
+	n405 [label=Data]
+	n405 -> "TELL ME MORE ABOUT SUCH FEELINGS." [label=string_data]
+	n01 -> n405
+	n406 [label=Data]
+	n406 -> "DO YOU OFTEN FEEL*" [label=string_data]
+	n01 -> n406
+	n407 [label=Data]
+	n407 -> "DO YOU ENJOY FEELING*" [label=string_data]
+	n01 -> n407
+	n408 [label=Data]
+	n408 -> "DO YOU REALLY BELIEVE I DON'T*" [label=string_data]
+	n01 -> n408
+	n409 [label=Data]
+	n409 -> "PERHAPS IN GOOD TIME I WILL*" [label=string_data]
+	n01 -> n409
+	n410 [label=Data]
+	n410 -> "DO YOU WANT ME TO*" [label=string_data]
+	n01 -> n410
+	n411 [label=Data]
+	n411 -> "DO YOU THINK YOU SHOULD BE ABLE TO*" [label=string_data]
+	n01 -> n411
+	n412 [label=Data]
+	n412 -> "WHY CAN'T YOU*" [label=string_data]
+	n01 -> n412
+	n413 [label=Data]
+	n413 -> "WHY ARE YOU INTERESTED IN WHETHER OR NOT I AM*" [label=string_data]
+	n01 -> n413
+	n414 [label=Data]
+	n414 -> "WOULD YOU PREFER IF I WERE NOT*" [label=string_data]
+	n01 -> n414
+	n415 [label=Data]
+	n415 -> "PERHAPS IN YOUR FANTASIES I AM*" [label=string_data]
+	n01 -> n415
+	n416 [label=Data]
+	n416 -> "HOW DO YOU KNOW YOU CAN'T*" [label=string_data]
+	n01 -> n416
+	n417 [label=Data]
+	n417 -> "HAVE YOU TRIED?" [label=string_data]
+	n01 -> n417
+	n418 [label=Data]
+	n418 -> "PERHAPS YOU CAN NOW*" [label=string_data]
+	n01 -> n418
+	n419 [label=Data]
+	n419 -> "DID YOU COME TO ME BECAUSE YOU ARE*" [label=string_data]
+	n01 -> n419
+	n420 [label=Data]
+	n420 -> "HOW LONG HAVE YOU BEEN*" [label=string_data]
+	n01 -> n420
+	n421 [label=Data]
+	n421 -> "DO YOU BELIEVE IT IS NORMAL TO BE*" [label=string_data]
+	n01 -> n421
+	n422 [label=Data]
+	n422 -> "DO YOU ENJOY BEING*" [label=string_data]
+	n01 -> n422
+	n423 [label=Data]
+	n423 -> "WE WERE DISCUSSING YOU-- NOT ME." [label=string_data]
+	n01 -> n423
+	n424 [label=Data]
+	n424 -> "OH, I*" [label=string_data]
+	n01 -> n424
+	n425 [label=Data]
+	n425 -> "YOU'RE NOT REALLY TALKING ABOUT ME, ARE YOU?" [label=string_data]
+	n01 -> n425
+	n426 [label=Data]
+	n426 -> "WHAT WOULD IT MEAN TO YOU IF YOU GOT*" [label=string_data]
+	n01 -> n426
+	n427 [label=Data]
+	n427 -> "WHY DO YOU WANT*" [label=string_data]
+	n01 -> n427
+	n428 [label=Data]
+	n428 -> "SUPPOSE YOU SOON GOT*" [label=string_data]
+	n01 -> n428
+	n429 [label=Data]
+	n429 -> "WHAT IF YOU NEVER GOT*" [label=string_data]
+	n01 -> n429
+	n430 [label=Data]
+	n430 -> "I SOMETIMES ALSO WANT*" [label=string_data]
+	n01 -> n430
+	n431 [label=Data]
+	n431 -> "WHY DO YOU ASK?" [label=string_data]
+	n01 -> n431
+	n432 [label=Data]
+	n432 -> "DOES THAT QUESTION INTEREST YOU?" [label=string_data]
+	n01 -> n432
+	n433 [label=Data]
+	n433 -> "WHAT ANSWER WOULD PLEASE YOU THE MOST?" [label=string_data]
+	n01 -> n433
+	n434 [label=Data]
+	n434 -> "WHAT DO YOU THINK?" [label=string_data]
+	n01 -> n434
+	n435 [label=Data]
+	n435 -> "ARE SUCH QUESTIONS ON YOUR MIND OFTEN?" [label=string_data]
+	n01 -> n435
+	n436 [label=Data]
+	n436 -> "WHAT IS IT THAT YOU REALLY WANT TO KNOW?" [label=string_data]
+	n01 -> n436
+	n437 [label=Data]
+	n437 -> "HAVE YOU ASKED ANYONE ELSE?" [label=string_data]
+	n01 -> n437
+	n438 [label=Data]
+	n438 -> "HAVE YOU ASKED SUCH QUESTIONS BEFORE?" [label=string_data]
+	n01 -> n438
+	n439 [label=Data]
+	n439 -> "WHAT ELSE COMES TO MIND WHEN YOU ASK THAT?" [label=string_data]
+	n01 -> n439
+	n440 [label=Data]
+	n440 -> "NAMES DON'T INTEREST ME." [label=string_data]
+	n01 -> n440
+	n441 [label=Data]
+	n441 -> "I DON'T CARE ABOUT NAMES-- PLEASE GO ON." [label=string_data]
+	n01 -> n441
+	n442 [label=Data]
+	n442 -> "IS THAT THE REAL REASON?" [label=string_data]
+	n01 -> n442
+	n443 [label=Data]
+	n443 -> "DON'T ANY OTHER REASONS COME TO MIND?" [label=string_data]
+	n01 -> n443
+	n444 [label=Data]
+	n444 -> "DOES THAT REASON EXPLAIN ANYTHING ELSE?" [label=string_data]
+	n01 -> n444
+	n445 [label=Data]
+	n445 -> "WHAT OTHER REASONS MIGHT THERE BE?" [label=string_data]
+	n01 -> n445
+	n446 [label=Data]
+	n446 -> "PLEASE DON'T APOLOGIZE!" [label=string_data]
+	n01 -> n446
+	n447 [label=Data]
+	n447 -> "APOLOGIES ARE NOT NECESSARY." [label=string_data]
+	n01 -> n447
+	n448 [label=Data]
+	n448 -> "WHAT FEELINGS DO YOU HAVE WHEN YOU APOLOGIZE." [label=string_data]
+	n01 -> n448
+	n449 [label=Data]
+	n449 -> "DON'T BE SO DEFENSIVE!" [label=string_data]
+	n01 -> n449
+	n450 [label=Data]
+	n450 -> "WHAT DOES THAT DREAM SUGGEST TO YOU?" [label=string_data]
+	n01 -> n450
+	n451 [label=Data]
+	n451 -> "DO YOU DREAM OFTEN?" [label=string_data]
+	n01 -> n451
+	n452 [label=Data]
+	n452 -> "WHAT PERSONS APPEAR IN YOUR DREAMS?" [label=string_data]
+	n01 -> n452
+	n453 [label=Data]
+	n453 -> "ARE YOU DISTURBED BY YOUR DREAMS?" [label=string_data]
+	n01 -> n453
+	n454 [label=Data]
+	n454 -> "HOW DO YOU DO ... PLEASE STATE YOUR PROBLEM." [label=string_data]
+	n01 -> n454
+	n455 [label=Data]
+	n455 -> "YOU DON'T SEEM QUITE CERTAIN." [label=string_data]
+	n01 -> n455
+	n456 [label=Data]
+	n456 -> "WHY THE UNCERTAIN TONE?" [label=string_data]
+	n01 -> n456
+	n457 [label=Data]
+	n457 -> "CAN'T YOU BE MORE POSITIVE?" [label=string_data]
+	n01 -> n457
+	n458 [label=Data]
+	n458 -> "YOU AREN'T SURE?" [label=string_data]
+	n01 -> n458
+	n459 [label=Data]
+	n459 -> "DON'T YOU KNOW?" [label=string_data]
+	n01 -> n459
+	n460 [label=Data]
+	n460 -> "ARE YOU SAYING NO JUST TO BE NEGATIVE?" [label=string_data]
+	n01 -> n460
+	n461 [label=Data]
+	n461 -> "YOU ARE BEING A BIT NEGATIVE." [label=string_data]
+	n01 -> n461
+	n462 [label=Data]
+	n462 -> "WHY NOT?" [label=string_data]
+	n01 -> n462
+	n463 [label=Data]
+	n463 -> "ARE YOU SURE?" [label=string_data]
+	n01 -> n463
+	n464 [label=Data]
+	n464 -> "WHY NO?" [label=string_data]
+	n01 -> n464
+	n465 [label=Data]
+	n465 -> "WHY ARE YOU CONCERNED ABOUT MY*" [label=string_data]
+	n01 -> n465
+	n466 [label=Data]
+	n466 -> "WHAT ABOUT YOUR OWN*" [label=string_data]
+	n01 -> n466
+	n467 [label=Data]
+	n467 -> "CAN YOU THINK OF A SPECIFIC EXAMPLE?" [label=string_data]
+	n01 -> n467
+	n468 [label=Data]
+	n468 -> "WHEN?" [label=string_data]
+	n01 -> n468
+	n469 [label=Data]
+	n469 -> "WHAT ARE YOU THINKING OF?" [label=string_data]
+	n01 -> n469
+	n470 [label=Data]
+	n470 -> "REALLY, ALWAYS?" [label=string_data]
+	n01 -> n470
+	n471 [label=Data]
+	n471 -> "DO YOU REALLY THINK SO?" [label=string_data]
+	n01 -> n471
+	n472 [label=Data]
+	n472 -> "BUT YOU ARE NOT SURE YOU*" [label=string_data]
+	n01 -> n472
+	n473 [label=Data]
+	n473 -> "DO YOU DOUBT YOU*" [label=string_data]
+	n01 -> n473
+	n474 [label=Data]
+	n474 -> "IN WHAT WAY?" [label=string_data]
+	n01 -> n474
+	n475 [label=Data]
+	n475 -> "WHAT RESEMBLANCE DO YOU SEE?" [label=string_data]
+	n01 -> n475
+	n476 [label=Data]
+	n476 -> "WHAT DOES THE SIMILARITY SUGGEST TO YOU?" [label=string_data]
+	n01 -> n476
+	n477 [label=Data]
+	n477 -> "WHAT OTHER CONNECTIONS DO YOU SEE?" [label=string_data]
+	n01 -> n477
+	n478 [label=Data]
+	n478 -> "COULD THERE REALLY BE SOME CONNECTION?" [label=string_data]
+	n01 -> n478
+	n479 [label=Data]
+	n479 -> "HOW?" [label=string_data]
+	n01 -> n479
+	n480 [label=Data]
+	n480 -> "YOU SEEM QUITE POSITIVE." [label=string_data]
+	n01 -> n480
+	n481 [label=Data]
+	n481 -> "ARE YOU SURE?" [label=string_data]
+	n01 -> n481
+	n482 [label=Data]
+	n482 -> "I SEE." [label=string_data]
+	n01 -> n482
+	n483 [label=Data]
+	n483 -> "I UNDERSTAND." [label=string_data]
+	n01 -> n483
+	n484 [label=Data]
+	n484 -> "WHY DO YOU BRING UP THE TOPIC OF FRIENDS?" [label=string_data]
+	n01 -> n484
+	n485 [label=Data]
+	n485 -> "DO YOUR FRIENDS WORRY YOU?" [label=string_data]
+	n01 -> n485
+	n486 [label=Data]
+	n486 -> "DO YOUR FRIENDS PICK ON YOU?" [label=string_data]
+	n01 -> n486
+	n487 [label=Data]
+	n487 -> "ARE YOU SURE YOU HAVE ANY FRIENDS?" [label=string_data]
+	n01 -> n487
+	n488 [label=Data]
+	n488 -> "DO YOU IMPOSE ON YOUR FRIENDS?" [label=string_data]
+	n01 -> n488
+	n489 [label=Data]
+	n489 -> "PERHAPS YOUR LOVE FOR FRIENDS WORRIES YOU." [label=string_data]
+	n01 -> n489
+	n490 [label=Data]
+	n490 -> "DO COMPUTERS WORRY YOU?" [label=string_data]
+	n01 -> n490
+	n491 [label=Data]
+	n491 -> "ARE YOU TALKING ABOUT ME IN PARTICULAR?" [label=string_data]
+	n01 -> n491
+	n492 [label=Data]
+	n492 -> "ARE YOU FRIGHTENED BY MACHINES?" [label=string_data]
+	n01 -> n492
+	n493 [label=Data]
+	n493 -> "WHY DO YOU MENTION COMPUTERS?" [label=string_data]
+	n01 -> n493
+	n494 [label=Data]
+	n494 -> "WHAT DO YOU THINK MACHINES HAVE TO DO WITH YOUR PROBLEM?" [label=string_data]
+	n01 -> n494
+	n495 [label=Data]
+	n495 -> "DON'T YOU THINK COMPUTERS CAN HELP PEOPLE?" [label=string_data]
+	n01 -> n495
+	n496 [label=Data]
+	n496 -> "WHAT IS IT ABOUT MACHINES THAT WORRIES YOU?" [label=string_data]
+	n01 -> n496
+	n497 [label=Data]
+	n497 -> "SAY, DO YOU HAVE ANY PSYCHOLOGICAL PROBLEMS?" [label=string_data]
+	n01 -> n497
+	n498 [label=Data]
+	n498 -> "WHAT DOES THAT SUGGEST TO YOU?" [label=string_data]
+	n01 -> n498
+	n499 [label=Data]
+	n499 -> "I SEE." [label=string_data]
+	n01 -> n499
+	n500 [label=Data]
+	n500 -> "I'M NOT SURE I UNDERSTAND YOU FULLY." [label=string_data]
+	n01 -> n500
+	n501 [label=Data]
+	n501 -> "COME COME ELUCIDATE YOUR THOUGHTS." [label=string_data]
+	n01 -> n501
+	n502 [label=Data]
+	n502 -> "CAN YOU ELABORATE ON THAT?" [label=string_data]
+	n01 -> n502
+	n503 [label=Data]
+	n503 -> "THAT IS QUITE INTERESTING." [label=string_data]
+	n01 -> n503
+	n504 [label="Remark:"]
+	n01 -> n504
+	n505 [label="Remark:    DATA FOR FINDING RIGHT REPLIES"]
+	n01 -> n505
+	n506 [label="Remark:"]
+	n01 -> n506
+	n507 [label=Data]
+	n508 [label="Number
+value 1"]
+	n507 -> n508 [label=numeric_data]
+	n509 [label="Number
+value 3"]
+	n507 -> n509 [label=numeric_data]
+	n510 [label="Number
+value 4"]
+	n507 -> n510 [label=numeric_data]
+	n511 [label="Number
+value 2"]
+	n507 -> n511 [label=numeric_data]
+	n512 [label="Number
+value 6"]
+	n507 -> n512 [label=numeric_data]
+	n513 [label="Number
+value 4"]
+	n507 -> n513 [label=numeric_data]
+	n514 [label="Number
+value 6"]
+	n507 -> n514 [label=numeric_data]
+	n515 [label="Number
+value 4"]
+	n507 -> n515 [label=numeric_data]
+	n516 [label="Number
+value 10"]
+	n507 -> n516 [label=numeric_data]
+	n517 [label="Number
+value 4"]
+	n507 -> n517 [label=numeric_data]
+	n518 [label="Number
+value 14"]
+	n507 -> n518 [label=numeric_data]
+	n519 [label="Number
+value 3"]
+	n507 -> n519 [label=numeric_data]
+	n520 [label="Number
+value 17"]
+	n507 -> n520 [label=numeric_data]
+	n521 [label="Number
+value 3"]
+	n507 -> n521 [label=numeric_data]
+	n522 [label="Number
+value 20"]
+	n507 -> n522 [label=numeric_data]
+	n523 [label="Number
+value 2"]
+	n507 -> n523 [label=numeric_data]
+	n524 [label="Number
+value 22"]
+	n507 -> n524 [label=numeric_data]
+	n525 [label="Number
+value 3"]
+	n507 -> n525 [label=numeric_data]
+	n526 [label="Number
+value 25"]
+	n507 -> n526 [label=numeric_data]
+	n527 [label="Number
+value 3"]
+	n507 -> n527 [label=numeric_data]
+	n01 -> n507
+	n528 [label=Data]
+	n529 [label="Number
+value 28"]
+	n528 -> n529 [label=numeric_data]
+	n530 [label="Number
+value 4"]
+	n528 -> n530 [label=numeric_data]
+	n531 [label="Number
+value 28"]
+	n528 -> n531 [label=numeric_data]
+	n532 [label="Number
+value 4"]
+	n528 -> n532 [label=numeric_data]
+	n533 [label="Number
+value 32"]
+	n528 -> n533 [label=numeric_data]
+	n534 [label="Number
+value 3"]
+	n528 -> n534 [label=numeric_data]
+	n535 [label="Number
+value 35"]
+	n528 -> n535 [label=numeric_data]
+	n536 [label="Number
+value 5"]
+	n528 -> n536 [label=numeric_data]
+	n537 [label="Number
+value 40"]
+	n528 -> n537 [label=numeric_data]
+	n538 [label="Number
+value 9"]
+	n528 -> n538 [label=numeric_data]
+	n539 [label="Number
+value 40"]
+	n528 -> n539 [label=numeric_data]
+	n540 [label="Number
+value 9"]
+	n528 -> n540 [label=numeric_data]
+	n541 [label="Number
+value 40"]
+	n528 -> n541 [label=numeric_data]
+	n542 [label="Number
+value 9"]
+	n528 -> n542 [label=numeric_data]
+	n543 [label="Number
+value 40"]
+	n528 -> n543 [label=numeric_data]
+	n544 [label="Number
+value 9"]
+	n528 -> n544 [label=numeric_data]
+	n545 [label="Number
+value 40"]
+	n528 -> n545 [label=numeric_data]
+	n546 [label="Number
+value 9"]
+	n528 -> n546 [label=numeric_data]
+	n547 [label="Number
+value 40"]
+	n528 -> n547 [label=numeric_data]
+	n548 [label="Number
+value 9"]
+	n528 -> n548 [label=numeric_data]
+	n01 -> n528
+	n549 [label=Data]
+	n550 [label="Number
+value 49"]
+	n549 -> n550 [label=numeric_data]
+	n551 [label="Number
+value 2"]
+	n549 -> n551 [label=numeric_data]
+	n552 [label="Number
+value 51"]
+	n549 -> n552 [label=numeric_data]
+	n553 [label="Number
+value 4"]
+	n549 -> n553 [label=numeric_data]
+	n554 [label="Number
+value 55"]
+	n549 -> n554 [label=numeric_data]
+	n555 [label="Number
+value 4"]
+	n549 -> n555 [label=numeric_data]
+	n556 [label="Number
+value 59"]
+	n549 -> n556 [label=numeric_data]
+	n557 [label="Number
+value 4"]
+	n549 -> n557 [label=numeric_data]
+	n558 [label="Number
+value 63"]
+	n549 -> n558 [label=numeric_data]
+	n559 [label="Number
+value 1"]
+	n549 -> n559 [label=numeric_data]
+	n560 [label="Number
+value 63"]
+	n549 -> n560 [label=numeric_data]
+	n561 [label="Number
+value 1"]
+	n549 -> n561 [label=numeric_data]
+	n562 [label="Number
+value 64"]
+	n549 -> n562 [label=numeric_data]
+	n563 [label="Number
+value 5"]
+	n549 -> n563 [label=numeric_data]
+	n564 [label="Number
+value 69"]
+	n549 -> n564 [label=numeric_data]
+	n565 [label="Number
+value 5"]
+	n549 -> n565 [label=numeric_data]
+	n566 [label="Number
+value 74"]
+	n549 -> n566 [label=numeric_data]
+	n567 [label="Number
+value 2"]
+	n549 -> n567 [label=numeric_data]
+	n568 [label="Number
+value 76"]
+	n549 -> n568 [label=numeric_data]
+	n569 [label="Number
+value 4"]
+	n549 -> n569 [label=numeric_data]
+	n01 -> n549
+	n570 [label=Data]
+	n571 [label="Number
+value 80"]
+	n570 -> n571 [label=numeric_data]
+	n572 [label="Number
+value 3"]
+	n570 -> n572 [label=numeric_data]
+	n573 [label="Number
+value 83"]
+	n570 -> n573 [label=numeric_data]
+	n574 [label="Number
+value 7"]
+	n570 -> n574 [label=numeric_data]
+	n575 [label="Number
+value 90"]
+	n570 -> n575 [label=numeric_data]
+	n576 [label="Number
+value 3"]
+	n570 -> n576 [label=numeric_data]
+	n577 [label="Number
+value 93"]
+	n570 -> n577 [label=numeric_data]
+	n578 [label="Number
+value 6"]
+	n570 -> n578 [label=numeric_data]
+	n579 [label="Number
+value 99"]
+	n570 -> n579 [label=numeric_data]
+	n580 [label="Number
+value 7"]
+	n570 -> n580 [label=numeric_data]
+	n581 [label="Number
+value 106"]
+	n570 -> n581 [label=numeric_data]
+	n582 [label="Number
+value 6"]
+	n570 -> n582 [label=numeric_data]
+	n01 -> n570
+	n583 [label=End]
+	n01 -> n583
 }

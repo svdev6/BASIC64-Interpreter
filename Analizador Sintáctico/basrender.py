@@ -126,7 +126,10 @@ class DotRender(Visitor):
         name = self.name()
         self.dot.node(name, label='Data')
         for data in n.mixedlist:
-            self.dot.edge(name, data.accept(self))
+            if isinstance(data, str):
+                self.dot.edge(name, data, label='string_data')
+            else:
+                self.dot.edge(name, data.accept(self), label='numeric_data')
         return name
 
     def visit_Read(self, n: Read):
