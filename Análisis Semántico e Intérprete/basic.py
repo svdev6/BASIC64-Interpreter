@@ -138,12 +138,14 @@ def parse_args():
 
   cli.add_argument(
     '-of', '--output-file',
-    type=str,
+    action='store_true',
+    default=False,
     help='Redirect PRINT output to a file')
 
   cli.add_argument(
     '-if', '--input-file',
-    type=str,
+    action='store_true',
+    default=False,
     help='Redirect INPUT to a file')
 
   return cli.parse_args()
@@ -182,6 +184,6 @@ if __name__ == '__main__':
     context.parse(source)
     if not args.no_run:
       if args.print_stats or args.write_stats:
-        context.print_statistics(source, args.uppercase, args.array_base, args.slicing, args.go_next, args.trace, args.tabs, args.random, fname, args.print_stats, args.write_stats)
+        context.print_statistics(source, args.uppercase, args.array_base, args.slicing, args.go_next, args.trace, args.tabs, args.random, fname, args.print_stats, args.write_stats, args.output_file)
       else:
-        context.run(args.uppercase, args.array_base, args.slicing, args.go_next, args.trace, args.tabs, args.random)
+        context.run(args.uppercase, args.array_base, args.slicing, args.go_next, args.trace, args.tabs, args.random, fname, args.output_file)
