@@ -1,0 +1,1 @@
+Este programa tardó 0.2870635986328125 segundos en ejecutarse.

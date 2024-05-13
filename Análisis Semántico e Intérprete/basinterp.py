@@ -27,9 +27,18 @@ def _is_truthy(value):
         return True
 
 class Interpreter(Visitor):
-    def __init__(self, prog, verbose = False):
+    def __init__(self, prog, verbose = False, uppercase = False, array_base = 1, slicing = False, go_next = False, trace = False, tabs = 15, random_seed = None):
         self.prog = prog
         self.verbose = verbose
+        self.uppercase = uppercase
+        self.array_base = array_base
+        self.slicing = slicing
+        self.go_next = go_next
+        self.trace = trace
+        self.tabs = tabs
+        self.random_seed = random_seed
+        if self.random_seed is not None:
+            random.seed(self.random_seed)  # Set the random seed
         self.dc = 0
         self.start_time = time.time() # Capturar el tiempo desde que inició el intérprete
 
@@ -74,8 +83,8 @@ class Interpreter(Visitor):
         }
     
     @classmethod
-    def interpret(cls, prog:Dict[int, Statement], verbose):
-        basic = cls(prog, verbose)
+    def interpret(cls, prog:Dict[int, Statement], verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed):
+        basic = cls(prog, verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed)
         try:
             basic.run()
         except BasicExit:
@@ -111,7 +120,7 @@ class Interpreter(Visitor):
     def newline(self):
         print(); self.column = 0
 
-    # Interprete
+    # Intérprete
 
     # Analisis Semantico (chequeos)
     def collect_data(self):
@@ -169,7 +178,11 @@ class Interpreter(Visitor):
     # Instrucción GOTO
     def goto(self, lineno):
         if not lineno in self.prog:
-            self.error(f"Linea de destino no definida en instrucción GOTO, ubicada en {self.stat[self.pc]}")
+            if self.go_next:
+                self.pc += 1
+                return
+            else:
+                self.error(f"Linea {lineno} no definida en instrucción GOTO, ubicada en {self.stat[self.pc]}")
         self.pc = self.stat.index(lineno)
 
     # Calcular el tiempo desde que se inició el intérprete
@@ -191,21 +204,25 @@ class Interpreter(Visitor):
             return chr(expr)
         else:
             self.error(f"La función CHR$() esperaba obtener un número, se obtuvo: {type(expr).__name__}")
-    
+
+    def print_stats(self):
+        time_elapsed = time.time() - self.start_time
+        print(f'Este programa tardó {time_elapsed} segundos en ejecutarse.')
+
     # Función que inicializa y corre el intérprete de BASIC
     def run(self):
         # Tabla de Simbolos
-        self.vars   = {}        # Todas las variables
-        self.lists  = {}        # Lista de variables
-        self.tables = {}        # Tablas
-        self.loops  = []        # Ciclos activos
-        self.loopend = {}       # Saber cuando termina un ciclo
-        self.gosub  = None      # Retorno para Gosub
-        self.column = 0         # Control de columnas para Print
+        self.vars    = {}        # Todas las variables
+        self.lists   = {}        # Lista de variables
+        self.tables  = {}        # Tablas
+        self.loops   = []        # Ciclos activos
+        self.loopend = {}        # Saber cuando termina un ciclo
+        self.gosub   = None      # Retorno para Gosub
+        self.column  = 0         # Control de columnas para Print
 
         self.stat = list(self.prog) # Ordenar lista de todas las lineas del programa
         self.stat.sort()
-        self.pc   = 0           # Contador de programa
+        self.pc      = 0         # Contador de programa
 
         # Preprocesamiento antes de ejecutar
         self.collect_data()     # Recoger todas las instrucciones DATA
@@ -215,6 +232,9 @@ class Interpreter(Visitor):
         while True:
             line  = self.stat[self.pc]
             instr = self.prog[line]
+
+            if self.trace:
+                print(f"Executing line {self.stat[self.pc]}")  # Trace the current line
 
             try:
                 if self.verbose:
@@ -273,6 +293,8 @@ class Interpreter(Visitor):
     def visit(self, instr: Let):
         var = instr.var
         value = instr.expr
+        if self.slicing:
+            self.error(f"No se puede asignar un valor a la variable {var}. Posiblemente se encuentra activo el corte de cadena.")
         self.assign(var, value)
 
     def visit(self, instr: Read):
@@ -283,15 +305,15 @@ class Interpreter(Visitor):
             # Inicializar 'value' con un valor por defecto antes de usarlo
             value = self.data[self.dc]  # Get the current data item
         
-            if isinstance(target.var, str) and target.var[-1] == '$':
-                # If it's a string variable, it should get a string Si es una variable de tipo string ($), debe obtener una string
+            if isinstance(target.var, str) and target.var[-1] == '$' and not self.slicing:
+                # Si es una variable de tipo string ($), debe obtener una string
                 value = value if isinstance(value, str) else str(value)  # Asegurarse de que sea una string
             else:
-                #  Si es una variable numérica, obtener el tipo correcto
+                # Si es una variable numérica, obtener el tipo correcto. Puede dar un mensaje de error si se activa el corte de cadena desde el compilador
                 try:
                     value = float(value)  # Convertir a float
                 except ValueError:
-                    self.error(f"No es posible convertir '{value}' en un número")
+                    self.error(f"No es posible convertir '{value}' en un número. Posiblemente se encuentra activo el corte de cadena.")
             self.assign(target, value)
             self.dc += 1
 
@@ -319,7 +341,7 @@ class Interpreter(Visitor):
             if isinstance(pitem, Node):
                 pitem = pitem.accept(self)
             if pitem == ',':
-                self.pad(15)
+                self.pad(self.tabs)
             elif pitem == ';':
                 self.pad(1)
             elif isinstance(pitem, str):
@@ -346,8 +368,12 @@ class Interpreter(Visitor):
 
         for variable in instr.vlist:
             value = input()
-            if variable.var[-1] == '$':
-                value = String(value)
+            if variable.var[-1] == '$' and not self.slicing:
+                if self.uppercase == True:
+                            value = String(value.upper())
+                else:
+                    value = String(value)
+                
             else:
                 try:
                     value = Number(int(value))
@@ -535,8 +561,8 @@ class Interpreter(Visitor):
         elif dim1 and not dim2:
             if var in self.lists:
                 x = dim1.accept(self)
-                "if x < 1 or x > len(self.lists[var]):"
-                "self.error(f'El índice de la lista se salió de su límite en la linea {lineno}')"
+                if x < self.array_base or x > len(self.lists[var]):
+                    self.error(f'El índice de la lista en la variable {var} está fuera de su límite en la linea {lineno}')
                 return self.lists[var][x - 1]
       
         elif dim1 and dim2:
@@ -545,8 +571,8 @@ class Interpreter(Visitor):
                 y = dim2.accept(self)
                 x = int(x)
                 y = int(y)
-                "if x < 1 or x > len(self.tables[var]) or y < 1 or y > len(self.tables[var][0]):"
-                "self.error(f'Los índices de la tabla en la variable {var} se salieron de sus límites en la linea {lineno}')"
+                if x < self.array_base or x > len(self.tables[var]) or y < self.array_base or y > len(self.tables[var][0]):
+                    self.error(f'Los índices de la tabla en la variable {var} están fuera de sus límites en la linea {lineno}')
                 return self.tables[var][x - 1][y - 1]
             
         else:

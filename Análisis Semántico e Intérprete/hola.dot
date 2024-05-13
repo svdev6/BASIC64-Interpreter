@@ -1,0 +1,14 @@
+digraph AST {
+	node [color=deepskyblue shape=box style=filled]
+	edge [arrowhead=none]
+	n01 [label=Program]
+	n02 [label="Remark:HOLA MUNDO EN BASIC64"]
+	n01 -> n02
+	n03 [label=Print]
+	n04 [label="String
+value: HOLA MUNDO"]
+	n03 -> n04 [label=pitem]
+	n01 -> n03
+	n05 [label=End]
+	n01 -> n05
+}

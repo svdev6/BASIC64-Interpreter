@@ -5,29 +5,66 @@
 # código fuente, informes de errores, etc.
 
 from rich      import print
+from contextlib import redirect_stdout
 
 from baslex    import Lexer
 from basparse  import Parser
 from basinterp import Interpreter
 from basast    import *
+from basrender import DotRender
 
 class Context:
   def __init__(self):
     self.lexer  = Lexer(self)
     self.parser = Parser(self)
     self.interp = Interpreter(self)
-    self.source = 'linear.bas'
+    self.source = ''
     self.ast = None
     self.have_errors = False
+
+  def print_tokens(self, source):
+    # Tokenize the source
+    tokens = list(self.lexer.tokenize(source))  # Convert to list for iteration
+      # Print each token with its details
+    for token in tokens:
+        # You might want to customize what information to display
+        print(f"Token(type={token.type}, value={token.value}, position={token.lineno}:{token.index})")
 
   def parse(self, source):
     self.have_errors = False
     self.source = source
     self.ast = self.parser.parse(self.lexer.tokenize(self.source))
 
-  def run(self):
+  def print_ast(self, source, fast, style):
+    self.source = source
+    self.ast = self.parser.parse(self.lexer.tokenize(self.source))
+    dot = DotRender.render(self.ast)
+    if style == 'dot':
+      with open(fast, "w") as fout:
+        fout.write(str(dot))
+        print(f'AST graph written to {fast}')
+    elif style == 'txt':
+      print(dot)
+
+  def print_statistics(self, source, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats):
+    self.source = source
+    self.parse(source)
+    self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed)
+    if write_stats:
+      base = fname.split('.')[0]
+      fstats = base + '_stats.txt'
+      print(f'Dumping text file with stats: {fstats}')
+      with open(fstats, 'w', encoding='utf-8') as fout:
+        with redirect_stdout(fout):
+          self.interp.print_stats()
+      if print_stats:
+        self.interp.print_stats()
+        return
+    self.interp.print_stats()
+
+  def run(self, uppercase, array_base, slicing, go_next, trace, tabs, random_seed):
     if not self.have_errors:
-      return self.interp.interpret(self.ast)
+      return self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed)
 
   def find_source(self, node):
     indices = self.parser.index_position(node)

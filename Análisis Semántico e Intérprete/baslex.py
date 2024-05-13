@@ -6,6 +6,9 @@ class Lexer(sly.Lexer):
 
 	reflags = re.IGNORECASE
 
+	def __init__(self, context):
+		self.context = context
+
 	tokens = {
 		# Keywords
 		LET, READ, DATA, PRINT, GOTO, IF,

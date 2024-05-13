@@ -1,0 +1,4 @@
+Symtab:
+Variables:
+Listas:
+Tablas:
