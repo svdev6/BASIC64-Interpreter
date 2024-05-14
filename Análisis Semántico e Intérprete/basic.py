@@ -9,28 +9,28 @@ Positional arguments:
   input              BASIC program file to compile
 
 Optional arguments:
-  -h, --help                 Show this help message and exit
-  -D, --debug                Generate assembly with extra information (for debugging purposes)
-  -o OUT, --out OUT          File name to store generated executable
-  -l, --lex                  Store output of lexer
-  -a STYLE                   Generate AST graph as DOT or TXT format
-  -I, --ir                   Dump the generated Intermediate representation
-  --sym                      Dump the symbol table
-  -S, --asm                  Store the generated assembly file
-  -R, --exec                 Execute the generated program
-  -v, --version              Show the version of the BASIC interpreter
-  -u, --uppercase            Convert all entries to uppercase
-  -ar INT, --array-base INT  Set the minimum index of the dimensional arrays (default is 1)
-  -sl, --slicing             Enable string slicing (disable string arrays)
-  -n, --no-run               Don't run the program after parsing
-  -g, --go-next              If no branch from a GOTO instruction exists, go to the next line
-  -t, --trace                Activate tracing to print line numbers during execution
-  --tabs INT                 Set the number of spaces for comma-separated elements (default is 15)
-  -rn INT, --random INT      Set the seed for the random number generator
-  -p, --print-stats          Print statistics on program termination
-  -w, --write-stats          Write statistics to a file on program termination
-  -of, --output-file         Redirect PRINT output to a file
-  -if, --input-file          Redirect INPUT to a file
+  -h, --help                               Show this help message and exit
+  -D, --debug                              Generate assembly with extra information (for debugging purposes)
+  -o OUT, --out OUT                        File name to store generated executable
+  -l, --lex                                Store output of lexer
+  -a STYLE                                 Generate AST graph as DOT or TXT format
+  -I, --ir                                 Dump the generated Intermediate representation
+  --sym                                    Dump the symbol table
+  -S, --asm                                Store the generated assembly file
+  -R, --exec                               Execute the generated program
+  -v, --version                            Show the version of the BASIC interpreter
+  -u, --uppercase                          Convert all entries to uppercase
+  -ar INT, --array-base INT                Set the minimum index of the dimensional arrays (default is 1)
+  -sl, --slicing                           Enable string slicing (disable string arrays)
+  -n, --no-run                             Don't run the program after parsing
+  -g, --go-next                            If no branch from a GOTO instruction exists, go to the next line
+  -t, --trace                              Activate tracing to print line numbers during execution
+  --tabs INT                               Set the number of spaces for comma-separated elements (default is 15)
+  -rn INT, --random INT                    Set the seed for the random number generator
+  -p, --print-stats                        Print statistics on program termination
+  -w, --write-stats                        Write statistics to a file on program termination
+  -of, --output-file                       Redirect PRINT output to a file
+  -if INPUT_FILE, --input-file INPUT_FILE  Redirect INPUT to a file
 '''
 
 from contextlib import redirect_stdout
