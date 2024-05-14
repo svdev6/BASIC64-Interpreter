@@ -146,8 +146,7 @@ def parse_args():
 
   cli.add_argument(
     '-if', '--input-file',
-    action='store_true',
-    default=False,
+    type=str,
     help='Redirect INPUT to a file')
 
   return cli.parse_args()
@@ -185,4 +184,4 @@ if __name__ == '__main__':
   else:
     context.parse(source)
     if not args.no_run:
-        context.run(args.uppercase, args.array_base, args.slicing, args.go_next, args.trace, args.tabs, args.random, fname, args.print_stats, args.write_stats, args.output_file)
+        context.run(args.uppercase, args.array_base, args.slicing, args.go_next, args.trace, args.tabs, args.random, fname, args.print_stats, args.write_stats, args.output_file, args.input_file)

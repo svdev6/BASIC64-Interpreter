@@ -92,7 +92,7 @@ class Lexer(sly.Lexer):
 		return t
 
 	def error(self, t):
-		print('Caracter ilegal: %s' % t.value[0], t.lineno)
+		print('Illegal character: %s' % t.value[0], t.lineno)
 		self.index += 1
 
 if __name__ == '__main__':

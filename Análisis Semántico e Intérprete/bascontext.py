@@ -46,16 +46,20 @@ class Context:
     elif style == 'txt':
       print(dot)
 
-  def run(self, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats, output_file):
+  def run(self, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats, output_file, input_file):
     if not self.have_errors:
       if output_file:
         base = fname.split('.')[0]
         fprint = base + '_print.txt'
         print(f'Redirecting PRINT output to file: {fprint}')
+        if input_file:
+          print(f'Redirecting INPUT to read from file: {input_file}')
         with open(fprint, 'w', encoding='utf-8') as fout:
           with redirect_stdout(fout):
-            return self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed, fname = fname, print_stats = print_stats, write_stats = write_stats)
-      return self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed, fname = fname, print_stats = print_stats, write_stats = write_stats)
+            return self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed, fname = fname, print_stats = print_stats, write_stats = write_stats, input_file = input_file)
+      elif input_file:
+        print(f'Redirecting INPUT to read from file: {input_file}')
+      return self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed, fname = fname, print_stats = print_stats, write_stats = write_stats, input_file = input_file)
 
   def find_source(self, node):
     indices = self.parser.index_position(node)

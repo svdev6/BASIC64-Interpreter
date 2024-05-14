@@ -29,7 +29,7 @@ def _is_truthy(value):
         return True
 
 class Interpreter(Visitor):
-    def __init__(self, prog, verbose = False, uppercase = False, array_base = 1, slicing = False, go_next = False, trace = False, tabs = 15, random_seed = None, fname = None, print_stats = False, write_stats = False):
+    def __init__(self, prog, verbose = False, uppercase = False, array_base = 1, slicing = False, go_next = False, trace = False, tabs = 15, random_seed = None, fname = None, print_stats = False, write_stats = False, input_file = None):
         self.prog = prog
         self.verbose = verbose
         self.uppercase = uppercase
@@ -40,14 +40,20 @@ class Interpreter(Visitor):
         self.tabs = tabs
         self.random_seed = random_seed
         if self.random_seed is not None:
-            random.seed(self.random_seed)  # Set the random seed
+            random.seed(self.random_seed)  # Semilla para el generador de números aleatorios
         self.dc = 0
         self.start_time = time.time() # Capturar el tiempo desde que inició el intérprete
         self.pc = 0  # Contador de instrucciones ejecutadas
         self.memory_used = 0  # Uso de memoria
-        self.fname = fname
-        self.print_stats = print_stats
-        self.write_stats = write_stats
+        self.fname = fname # Nombre del archivo
+        self.print_stats = print_stats # Imprimir estadísticas en pantalla
+        self.write_stats = write_stats # Escribir estadísticas en archivo de texto
+        self.input_file = input_file
+        self.input_lines = []
+        if self.input_file:
+            with open(self.input_file, 'r') as f:
+                self.input_lines = f.readlines()
+        self.input_index = 0
 
         # Diccionario de funciones predefinidas
         self.functions = {
@@ -90,8 +96,8 @@ class Interpreter(Visitor):
         }
     
     @classmethod
-    def interpret(cls, prog:Dict[int, Statement], verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats):
-        basic = cls(prog, verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats)
+    def interpret(cls, prog:Dict[int, Statement], verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats, input_file):
+        basic = cls(prog, verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats, input_file)
         try:
             basic.run()
         except BasicExit:
@@ -105,13 +111,13 @@ class Interpreter(Visitor):
         if isinstance(left, Union[int, float]) and isinstance(right, Union[int, float]):
             return True
         else:
-            self.error(f"{instr.op} Los operandos deben ser numéricos")
+            self.error(f"{instr.op} The operands must be numeric")
 
     def _check_numeric_operand(self, instr, value):
         if isinstance(value, Union[int, float]):
             return True
         else:
-            self.error(f"{instr.op} El operando debe ser numérico")
+            self.error(f"{instr.op} The operand isn't numeric")
 
     # Método Print según Peter Norvig
     def print_string(self, s) -> None:
@@ -161,10 +167,10 @@ class Interpreter(Visitor):
                 has_end = lineno
 
         if not has_end:
-            self.error("No hay instrucción END")
+            self.error("Undefined END instruction")
 
         if has_end != lineno:
-            self.error("END no es la última instrucción")
+            self.error("END is not the last instruction")
 
     def check_loops(self):
         for pc in range(len(self.stat)):
@@ -180,7 +186,7 @@ class Interpreter(Visitor):
                         self.loopend[pc] = i
                         break
                 else:
-                    self.error("Instrucción FOR sin NEXT en la linea %s" % self.stat[pc])
+                    self.error("FOR without NEXT at line %s" % self.stat[pc])
 
     # Instrucción GOTO
     def goto(self, lineno):
@@ -189,7 +195,7 @@ class Interpreter(Visitor):
                 self.pc += 1
                 return
             else:
-                self.error(f"Linea {lineno} no definida en instrucción GOTO, ubicada en {self.stat[self.pc]}")
+                self.error(f"Undefined line {lineno} in GOTO instruction, located at line {self.stat[self.pc]}")
         self.pc = self.stat.index(lineno)
 
     # Calcular el tiempo desde que se inició el intérprete
@@ -201,7 +207,7 @@ class Interpreter(Visitor):
         if isinstance(expr, str):
             return len(expr)  # Retornar la longitud
         else:
-            self.error(f"La función LEN() esperaba obtener un string, se obtuvo: {type(expr).__name__}")
+            self.error(f"LEN() expected a string, was obtained: {type(expr).__name__}")
 
     def return_pi(self):
         return 3.141592654
@@ -210,15 +216,15 @@ class Interpreter(Visitor):
         if isinstance(expr, Union[int, float]):
             return chr(expr)
         else:
-            self.error(f"La función CHR$() esperaba obtener un número, se obtuvo: {type(expr).__name__}")
+            self.error(f"CHR$() expected a number, was obtained: {type(expr).__name__}")
 
     def print_statistics(self):
         time_elapsed = time.time() - self.start_time
         process = psutil.Process()
         self.memory_used = process.memory_info().rss
-        print(f'Este programa tardó {time_elapsed:.2f} segundos en ejecutarse.')
-        print(f'Uso de memoria: {self.memory_used} bytes')
-        print(f"Número total de lineas ejecutadas con éxito: {self.pc + 1}")
+        print(f'This program took {time_elapsed:.2f} seconds to run')
+        print(f'Memory usage: {self.memory_used} bytes')
+        print(f"Total number of processed lines: {self.pc + 1}")
 
     # Función que inicializa y corre el intérprete de BASIC
     def run(self):
@@ -276,7 +282,7 @@ class Interpreter(Visitor):
                     self.lists[var] = [0] * 10
 
                 if x > len(self.lists[var]):
-                    self.error(f"Dimensión muy larga en la linea {lineno}")
+                    self.error(f"Dimension is too large at line {lineno}")
 
                 if isinstance(value, (int, float, str)):
                     self.lists[var][x - 1] = value
@@ -294,7 +300,7 @@ class Interpreter(Visitor):
                     self.tables[var] = v
                 # Si la variable existe
                 if x > len(self.tables[var]) or y > len(self.tables[var][0]):
-                    self.error("Dimensiones muy largas en la linea {lineno}")
+                    self.error("Dimensions are too large at line {lineno}")
                 
                 if isinstance(value, (int, float, str)):
                     self.tables[var][x - 1][y - 1] = value
@@ -306,7 +312,7 @@ class Interpreter(Visitor):
         var = instr.var
         value = instr.expr
         if self.slicing:
-            self.error(f"No se puede asignar un valor a la variable {var}. Posiblemente se encuentra activo el corte de cadena.")
+            self.error(f"Cannot proceed with LET instruction at line {self.stat[self.pc]}. String slicing might be enabled.")
         self.assign(var, value)
 
     def visit(self, instr: Read):
@@ -317,7 +323,9 @@ class Interpreter(Visitor):
             # Inicializar 'value' con un valor por defecto antes de usarlo
             value = self.data[self.dc]  # Get the current data item
         
-            if isinstance(target.var, str) and target.var[-1] == '$' and not self.slicing:
+            if isinstance(target.var, str) and target.var[-1] == '$':
+                if self.slicing:
+                    self.error(f"Cannot proceed with READ instruction at line {self.stat[self.pc]}. String slicing might be enabled.")
                 # Si es una variable de tipo string ($), debe obtener una string
                 value = value if isinstance(value, str) else str(value)  # Asegurarse de que sea una string
             else:
@@ -325,7 +333,7 @@ class Interpreter(Visitor):
                 try:
                     value = float(value)  # Convertir a float
                 except ValueError:
-                    self.error(f"No es posible convertir '{value}' en un número. Posiblemente se encuentra activo el corte de cadena.")
+                    self.error(f"The value {value} could not be read.")
             self.assign(target, value)
             self.dc += 1
 
@@ -361,7 +369,7 @@ class Interpreter(Visitor):
             elif isinstance(pitem, (int, float)):
                 self.print_string(f'{pitem:g}')
             else:
-                self.error(f"Elemento {pitem} inesperado dentro de la instrucción PRINT en la linea {self.stat[self.pc]}")
+                self.error(f"Unexpected element {pitem} inside PRINT instruction at line {self.stat[self.pc]}")
 
         if (not items) or items[-1] not in (',', ';'):
             self.newline()
@@ -373,24 +381,51 @@ class Interpreter(Visitor):
         # Convertir la tupla en un string, uniendo sus elementos con un separador
             label = ' '.join(str(item) for item in label if item is not None)
 
-        if label:
+        if label and not self.input_file:
+            # Remover el separador
+            label = label.rstrip(';').strip()
+            label = label.rstrip(',').strip()
             # Escribir mensaje antes de solicitar la entrada de datos
-            sys.stdout.write(label)
+            sys.stdout.write(label + " ")
 
         for variable in instr.vlist:
-            value = input()
-            if variable.var[-1] == '$' and not self.slicing:
-                if self.uppercase == True:
+            if self.input_file:
+            # Leer del archivo
+                if self.input_index < len(self.input_lines):
+                    value = self.input_lines[self.input_index].strip()
+                    if variable.var[-1] == '$' and not self.slicing:
+                        if self.slicing:
+                            self.error(f"Cannot proceed with INPUT instruction at line {self.stat[self.pc]}. String slicing might be enabled.")
+                        elif self.uppercase == True:
                             value = String(value.upper())
+                        else:
+                            value = String(value)
+                    else:
+                        try:
+                            value = Number(int(value))
+                        except ValueError:
+                            value = Number(float(value))
+                    self.assign(variable, value)
+                    self.input_index += 1
                 else:
-                    value = String(value)
-                
+                    self.error("No more input data available in the file.")
+
             else:
-                try:
-                    value = Number(int(value))
-                except ValueError:
-                    value = Number(float(value))
-            self.assign(variable, value)
+                value = input()
+                if variable.var[-1] == '$':
+                    if self.slicing:
+                        self.error(f"Cannot proceed with INPUT instruction at line {self.stat[self.pc]}. String slicing might be enabled.")
+                    elif self.uppercase == True:
+                        value = String(value.upper())
+                    else:
+                        value = String(value)
+                
+                else:
+                    try:
+                        value = Number(int(value))
+                    except ValueError:
+                        value = Number(float(value))
+                self.assign(variable, value)
 
     def visit(self, instr: Goto):
         newline = instr.lineno
@@ -444,14 +479,14 @@ class Interpreter(Visitor):
     def visit(self, instr: Next):
         lineno = self.stat[self.pc]
         if not self.loops:
-            print(f"NEXT sin FOR en la linea {lineno}")
+            print(f"NEXT without FOR at line {lineno}")
             return
         nextvar = instr.ident
         self.pc = self.loops[-1][0]
         loopinst = self.prog[self.stat[self.pc]]
         forvar = loopinst.ident
         if nextvar != forvar:
-            print(f"NEXT no concuerda con FOR en la linea {lineno}")
+            print(f"NEXT doesn't match FOR at line {lineno}")
             return
         raise BasicContinue()
 
@@ -488,7 +523,7 @@ class Interpreter(Visitor):
         newline = instr.lineno
         lineno = self.stat[self.pc]
         if self.gosub:
-            print(f"Ya se está presentando una subrutina en la linea {lineno}")
+            print(f"A subroutine is already in process at line {lineno}")
             return
         self.gosub = self.stat[self.pc]
         self.goto(newline)
@@ -497,7 +532,7 @@ class Interpreter(Visitor):
     def visit(self, instr: Return):
         lineno = self.stat[self.pc]
         if not self.gosub:
-            print(f"Instrucción RETURN sin GOSUB en la linea {lineno}")
+            print(f"RETURN without GOSUB at lien {lineno}")
             return
         self.goto(self.gosub)
         self.gosub = None
@@ -510,7 +545,7 @@ class Interpreter(Visitor):
                 dim2 = item.dim2
 
                 if self.slicing:
-                    self.error(f"No se puede inicializar la dimensión {vname}. Posiblemente esté activo el corte de cadena.")
+                    self.error(f"The dimension at line {self.stat[self.pc]} could not be initialized. String slicing might be enabled.")
 
                 if not dim2:
                     # Variable de una dimensión
@@ -542,7 +577,7 @@ class Interpreter(Visitor):
                 length = expr[2].accept(self)  # Longitud
                 return str_val[start - 1 : start - 1 + length]
             else:
-                self.error("Parámetros incorrectos para MID$")
+                self.error("Incorrect parameters for MID$")
 
         # Si la función no cuenta con argumentos, como la función TIME()
         elif expr is None:
@@ -557,7 +592,7 @@ class Interpreter(Visitor):
                 processed_expr = expr.accept(self) # Si es un solo argumento, inicializar directamente
                 return self.functions[name](processed_expr)
         else:
-            self.error(f"Función {name} no definida")
+            self.error(f"Undefined function {name}")
 
     def visit(self, instr: Call):
         name = instr.name  # Nombre de la función
@@ -567,13 +602,13 @@ class Interpreter(Visitor):
         # Procesa la lista de argumentos, cada uno de estos siendo un nodo AST
             args = [e.accept(self) for e in expr]
             if name not in self.functions:
-                self.error(f"Función {name} no definida")
+                self.error(f"Undefined function {name}")
             return self.functions[name](*args)  # Pasar el argumento de la función
 
         elif isinstance(expr, Node):
             # Si es un único nodo AST
             if name not in self.functions:
-                self.error(f"Función {name} no definida")
+                self.error(f"Undefined function {name}")
             return self.functions[name](expr.accept(self))
     
     def visit(self, instr: Variable):
@@ -585,14 +620,14 @@ class Interpreter(Visitor):
             if var in self.vars:
                 return self.vars[var]
             else:
-                self.error(f"Variable '{var}' no definida en la linea {lineno}")
+                self.error(f"Undefined variable '{var}' at line {lineno}")
   
         # Evaluación de arreglo unidimensional (lista)
         elif dim1 and not dim2:
             if var in self.lists:
                 x = dim1.accept(self)
                 if x < self.array_base or x > len(self.lists[var]):
-                    self.error(f'El índice de la lista en la variable {var} está fuera de su límite en la linea {lineno}')
+                    self.error(f'Index of {var} is out of bounds at line {lineno}')
                 return self.lists[var][x - 1]
       
         elif dim1 and dim2:
@@ -602,11 +637,11 @@ class Interpreter(Visitor):
                 x = int(x)
                 y = int(y)
                 if x < self.array_base or x > len(self.tables[var]) or y < self.array_base or y > len(self.tables[var][0]):
-                    self.error(f'Los índices de la tabla en la variable {var} están fuera de sus límites en la linea {lineno}')
+                    self.error(f'Indexes of {var} are out of bounds at line {lineno}')
                 return self.tables[var][x - 1][y - 1]
             
         else:
-            self.error(f"Variable '{var}' no definida en la linea {lineno}")
+            self.error(f"Undefined variable '{var}' at line {lineno}")
             
     def visit(self, instr: Union[Binary, Logical]):
         left = instr.left.accept(self)
@@ -629,7 +664,7 @@ class Interpreter(Visitor):
             elif instr.op == '>=':
                 return left >= right
             else:
-                self.error(f"Operador incorrecto {instr.op}")
+                self.error(f"Incorrect operator {instr.op}")
             
         # Operaciones entre valores numéricos
         if instr.op == '+':
@@ -666,7 +701,7 @@ class Interpreter(Visitor):
             self._check_numeric_operands(instr, left, right)
             return left >= right
         else:
-            self.error(f"Operador incorrecto {instr.op}")
+            self.error(f"Incorrect operator {instr.op}")
 
     def visit(self, instr: Unary):
         value = instr.expr.accept(self)

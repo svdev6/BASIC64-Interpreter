@@ -36,7 +36,7 @@ class Parser(sly.Parser):
     
     @_("error")
     def program(self, p):
-        raise SyntaxError("Programa malformado")
+        raise SyntaxError("Malformed Program")
     
     # Definición de comandos
 
@@ -60,11 +60,11 @@ class Parser(sly.Parser):
 
     @_("INTEGER error NEWLINE")
     def stmt(self, p):
-        raise SyntaxError("Error en comando")
+        raise SyntaxError("Malformed Command")
     
     @_("INTEGER NEWLINE", "NEWLINE")
     def stmt(self, p):
-        raise SyntaxError("Linea Vacia")
+        raise SyntaxError("Empty line")
     
     # Instrucción LET
 
@@ -74,7 +74,7 @@ class Parser(sly.Parser):
     
     @_("LET variable '=' error")
     def command(self, p):
-        raise SyntaxError("Expresión errónea en LET")
+        raise SyntaxError("Incorrect expression in LET instruction")
 
     # Instrucción READ
 
@@ -88,7 +88,7 @@ class Parser(sly.Parser):
     
     @_("READ error")
     def command(self, p):
-        raise SyntaxError("Instrucción READ malformada")
+        raise SyntaxError("Malformed READ instruction")
 
     # Instrucción DATA
 
@@ -98,7 +98,7 @@ class Parser(sly.Parser):
     
     @_("DATA error")
     def command(self, p):
-        raise SyntaxError("Instrucción DATA malformada")
+        raise SyntaxError("Malformed DATA instruction")
     
     @_("mixeditem")
     def mixedlist(self, p):
@@ -120,7 +120,7 @@ class Parser(sly.Parser):
     
     @_("INPUT error")
     def command(self, p):
-        raise SyntaxError("Instrucción INPUT malformada")
+        raise SyntaxError("Malformed INPUT instruction")
     
     # Instrucción PRINT
 
@@ -138,7 +138,7 @@ class Parser(sly.Parser):
 
     @_("PRINT error")
     def command(self, p):
-        raise SyntaxError("Instrucción PRINT malformada")
+        raise SyntaxError("Malformed PRINT instruction")
     
     # Instrucción GOTO
     
@@ -148,7 +148,7 @@ class Parser(sly.Parser):
     
     @_("GOTO error")
     def command(self, p):
-        raise SyntaxError("Instrucción GOTO malformada")
+        raise SyntaxError("Malformed GOTO instruction")
     
     # Instrucción IF-THEN
 
@@ -158,11 +158,11 @@ class Parser(sly.Parser):
     
     @_("IF relexpr THEN error")
     def command(self, p):
-        raise SyntaxError("Linea de código incorrecta en THEN")
+        raise SyntaxError("Incorrect line number at THEN")
     
     @_("IF error THEN INTEGER")
     def command(self, p):
-        raise SyntaxError("Expresión relacional incorrecta en IF")
+        raise SyntaxError("Incorrect relational expression in IF instruction")
     
     # Instrucción FOR
 
@@ -172,11 +172,11 @@ class Parser(sly.Parser):
     
     @_("FOR IDENT '=' error TO expr optstep")
     def command(self, p):
-        raise SyntaxError("Valor inicial erróneo en la instrucción FOR")
+        raise SyntaxError("Incorrect initial value in FOR instruction")
     
     @_("FOR IDENT '=' expr TO error optstep")
     def command(self, p):
-        raise SyntaxError("Valor final erróneo en la instrucción FOR")
+        raise SyntaxError("Incorrect final value in FOR instruction")
 
     # Instrucción NEXT
 
@@ -186,7 +186,7 @@ class Parser(sly.Parser):
 
     @_("NEXT error")
     def command(self, p):
-        raise SyntaxError("Instrucción NEXT malformada")
+        raise SyntaxError("Malformed NEXT instruction")
     
     # Instrucción END
     
@@ -214,11 +214,11 @@ class Parser(sly.Parser):
     
     @_("DEF FNAME '(' IDENT ')' '=' error")
     def command(self, p):
-        raise SyntaxError("Expresión incorrecta en la instrucción DEF")
+        raise SyntaxError("Incorrect expression in DEF instruction")
     
     @_("DEF FNAME '(' error ')' '=' expr")
     def command(self, p):
-        raise SyntaxError("Argumento incorrecto en la instrucción DEF")
+        raise SyntaxError("Incorrect argument in DEF instruction")
     
     # Instrucción GOSUB
 
@@ -228,7 +228,7 @@ class Parser(sly.Parser):
     
     @_("GOSUB error")
     def command(self, p):
-        raise SyntaxError("Instrucción GOSUB malformada")
+        raise SyntaxError("Malformed GOSUB instruction")
     
     # Instrucción RETURN
 
@@ -244,7 +244,7 @@ class Parser(sly.Parser):
     
     @_("DIM error")
     def command(self, p):
-        raise SyntaxError("Instrucción DIM malformada")
+        raise SyntaxError("Malformed DIM instruction")
     
     # Expresiones aritméticas
 
@@ -420,22 +420,19 @@ class Parser(sly.Parser):
         lineno = p.lineno if p else 'EOF'
         value  = p.value  if p else 'EOF'
         if self.context:
-            self.context.error(lineno, f"Error de sintaxis en {value}")
+            self.context.error(lineno, f"Syntax Error: {value}")
         else:
-            print(f"Línea {lineno}: Error de sintaxis en {value}")
+            print(f"Syntax Error: {value} at line {lineno}")
 
     def __init__(self, context = None):
         self.context = context
 
 def test(txt):
-    from basinterp import Interpreter
     l = Lexer()
     p = Parser()
-    verbose = False
     try:
         prog = p.parse(l.tokenize(txt))
-        "print(prog)"
-        Interpreter.interpret(prog.lines, verbose = verbose)
+        print(prog)
 
     except SyntaxError as e:
         print(e)
@@ -444,7 +441,7 @@ if __name__ == '__main__':
     import sys
 
     if len(sys.argv) != 2:
-        print("usage: python basparse.py source")
+        print("Usage: python basparse.py source")
         exit(1)
 
     test(open(sys.argv[1]).read())
