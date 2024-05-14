@@ -1,1 +1,3 @@
-Este programa tardó 0.26805949211120605 segundos en ejecutarse.
+Este programa tardó 0.22 segundos en ejecutarse.
+Uso de memoria: 30822400 bytes
+Número total de lineas ejecutadas con éxito: 24

@@ -8,6 +8,8 @@ import sys
 import math
 import time
 import random
+import psutil
+from contextlib import redirect_stdout
 
 from typing import Dict, Union
 from basast import *
@@ -27,7 +29,7 @@ def _is_truthy(value):
         return True
 
 class Interpreter(Visitor):
-    def __init__(self, prog, verbose = False, uppercase = False, array_base = 1, slicing = False, go_next = False, trace = False, tabs = 15, random_seed = None):
+    def __init__(self, prog, verbose = False, uppercase = False, array_base = 1, slicing = False, go_next = False, trace = False, tabs = 15, random_seed = None, fname = None, print_stats = False, write_stats = False):
         self.prog = prog
         self.verbose = verbose
         self.uppercase = uppercase
@@ -41,6 +43,11 @@ class Interpreter(Visitor):
             random.seed(self.random_seed)  # Set the random seed
         self.dc = 0
         self.start_time = time.time() # Capturar el tiempo desde que inició el intérprete
+        self.pc = 0  # Contador de instrucciones ejecutadas
+        self.memory_used = 0  # Uso de memoria
+        self.fname = fname
+        self.print_stats = print_stats
+        self.write_stats = write_stats
 
         # Diccionario de funciones predefinidas
         self.functions = {
@@ -83,8 +90,8 @@ class Interpreter(Visitor):
         }
     
     @classmethod
-    def interpret(cls, prog:Dict[int, Statement], verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed):
-        basic = cls(prog, verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed)
+    def interpret(cls, prog:Dict[int, Statement], verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats):
+        basic = cls(prog, verbose, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats)
         try:
             basic.run()
         except BasicExit:
@@ -205,9 +212,13 @@ class Interpreter(Visitor):
         else:
             self.error(f"La función CHR$() esperaba obtener un número, se obtuvo: {type(expr).__name__}")
 
-    def print_stats(self):
+    def print_statistics(self):
         time_elapsed = time.time() - self.start_time
-        print(f'Este programa tardó {time_elapsed} segundos en ejecutarse.')
+        process = psutil.Process()
+        self.memory_used = process.memory_info().rss
+        print(f'Este programa tardó {time_elapsed:.2f} segundos en ejecutarse.')
+        print(f'Uso de memoria: {self.memory_used} bytes')
+        print(f"Número total de lineas ejecutadas con éxito: {self.pc + 1}")
 
     # Función que inicializa y corre el intérprete de BASIC
     def run(self):
@@ -244,6 +255,7 @@ class Interpreter(Visitor):
                 continue
 
             self.pc += 1
+
 
     # Asignaciones
     def assign(self, target, value):
@@ -349,7 +361,6 @@ class Interpreter(Visitor):
             elif isinstance(pitem, (int, float)):
                 self.print_string(f'{pitem:g}')
             else:
-                print(pitem)
                 self.error(f"Elemento {pitem} inesperado dentro de la instrucción PRINT en la linea {self.stat[self.pc]}")
 
         if (not items) or items[-1] not in (',', ';'):
@@ -445,7 +456,23 @@ class Interpreter(Visitor):
         raise BasicContinue()
 
     def visit(self, instr: Union[End, Stop]):
-        raise BasicExit()
+        if self.write_stats:
+            base = self.fname.split('.')[0]
+            fstats = base + '_stats.txt'
+            print(f'Dumping text file with stats: {fstats}')
+            with open(fstats, 'w', encoding='utf-8') as fout:
+                with redirect_stdout(fout):
+                    self.print_statistics()
+            if self.print_stats:
+                self.print_statistics()
+            raise BasicExit()
+
+        elif self.print_stats:
+            self.print_statistics()
+            raise BasicExit()
+        
+        else:
+            raise BasicExit()
     
     def visit(self, instr: Def):
         fname = instr.fn
@@ -481,6 +508,9 @@ class Interpreter(Visitor):
                 vname = item.var
                 dim1 = item.dim1
                 dim2 = item.dim2
+
+                if self.slicing:
+                    self.error(f"No se puede inicializar la dimensión {vname}. Posiblemente esté activo el corte de cadena.")
 
                 if not dim2:
                     # Variable de una dimensión

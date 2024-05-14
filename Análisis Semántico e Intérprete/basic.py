@@ -1,4 +1,5 @@
 # basic.py
+
 '''
 Usage: basic.py [-h] [-a style] [-o OUT] [-l] [-D] [-p] [-I] [--sym] [-S] [-R] [-u] [-ar] [-sl] [-n] [-g] [-t] [--tabs] input
 
@@ -12,11 +13,12 @@ Optional arguments:
   -D, --debug                Generate assembly with extra information (for debugging purposes)
   -o OUT, --out OUT          File name to store generated executable
   -l, --lex                  Store output of lexer
-  -a STYLE                   Generate AST graph as DOT format
+  -a STYLE                   Generate AST graph as DOT or TXT format
   -I, --ir                   Dump the generated Intermediate representation
   --sym                      Dump the symbol table
   -S, --asm                  Store the generated assembly file
   -R, --exec                 Execute the generated program
+  -v, --version              Show the version of the BASIC interpreter
   -u, --uppercase            Convert all entries to uppercase
   -ar INT, --array-base INT  Set the minimum index of the dimensional arrays (default is 1)
   -sl, --slicing             Enable string slicing (disable string arrays)
@@ -70,7 +72,7 @@ def parse_args():
     action='store',
     dest='style',
     choices=['dot', 'txt'],
-    help='Generate AST graph as DOT format')
+    help='Generate AST graph as DOT or TXT format')
 
   mutex.add_argument(
     '--sym',
@@ -183,7 +185,4 @@ if __name__ == '__main__':
   else:
     context.parse(source)
     if not args.no_run:
-      if args.print_stats or args.write_stats:
-        context.print_statistics(source, args.uppercase, args.array_base, args.slicing, args.go_next, args.trace, args.tabs, args.random, fname, args.print_stats, args.write_stats, args.output_file)
-      else:
-        context.run(args.uppercase, args.array_base, args.slicing, args.go_next, args.trace, args.tabs, args.random, fname, args.output_file)
+        context.run(args.uppercase, args.array_base, args.slicing, args.go_next, args.trace, args.tabs, args.random, fname, args.print_stats, args.write_stats, args.output_file)

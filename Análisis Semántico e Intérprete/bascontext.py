@@ -46,41 +46,7 @@ class Context:
     elif style == 'txt':
       print(dot)
 
-  def print_statistics(self, source, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats, output_file):
-    self.source = source
-    self.parse(source)
-    if output_file:
-        base = fname.split('.')[0]
-        fprint = base + '_print.txt'
-        print(f'Redirecting PRINT output to file: {fprint}')
-        with open(fprint, 'w', encoding='utf-8') as fout:
-          with redirect_stdout(fout):
-            self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed)
-        if write_stats:
-          fstats = base + '_stats.txt'
-          print(f'Dumping text file with stats: {fstats}')
-          with open(fstats, 'w', encoding='utf-8') as fout:
-            with redirect_stdout(fout):
-              self.interp.print_stats()
-          if print_stats:
-            self.interp.print_stats()
-            return
-          return
-          
-    self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed)
-    if write_stats:
-      base = fname.split('.')[0]
-      fstats = base + '_stats.txt'
-      print(f'Dumping text file with stats: {fstats}')
-      with open(fstats, 'w', encoding='utf-8') as fout:
-        with redirect_stdout(fout):
-          self.interp.print_stats()
-      if print_stats:
-        self.interp.print_stats()
-        return
-    self.interp.print_stats()
-
-  def run(self, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, output_file):
+  def run(self, uppercase, array_base, slicing, go_next, trace, tabs, random_seed, fname, print_stats, write_stats, output_file):
     if not self.have_errors:
       if output_file:
         base = fname.split('.')[0]
@@ -88,8 +54,8 @@ class Context:
         print(f'Redirecting PRINT output to file: {fprint}')
         with open(fprint, 'w', encoding='utf-8') as fout:
           with redirect_stdout(fout):
-            return self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed)
-      return self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed)
+            return self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed, fname = fname, print_stats = print_stats, write_stats = write_stats)
+      return self.interp.interpret(self.ast.lines, verbose=False, uppercase = uppercase, array_base = array_base, slicing = slicing, go_next = go_next, trace = trace, tabs = tabs, random_seed = random_seed, fname = fname, print_stats = print_stats, write_stats = write_stats)
 
   def find_source(self, node):
     indices = self.parser.index_position(node)
