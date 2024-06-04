@@ -315,7 +315,7 @@ def main():
     p = Parser(context)
 
     if len(sys.argv) != 2:
-        print("Uso: python basircode.py <archivo.bas>")
+        print("Uso: python basinterpir.py <archivo.bas>")
         sys.exit(1)
     
     source_file = sys.argv[1]
