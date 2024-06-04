@@ -42,7 +42,6 @@ class Context:
     if style == 'dot':
       with open(fast, "w") as fout:
         fout.write(str(dot))
-        print(f'AST graph written to {fast}')
     elif style == 'txt':
       print(dot)
 

@@ -1,3 +1,5 @@
+# basparse.py
+
 from rich import print
 import sly
 
@@ -18,6 +20,7 @@ class Parser(sly.Parser):
         ('left', '+', '-'),
         ('left', '*', '/'),
         ('left', '^'),
+        ('left', '%'),
         ('right', UMINUS),
     )
 
@@ -252,7 +255,8 @@ class Parser(sly.Parser):
        "expr '-' expr",
        "expr '*' expr",
        "expr '/' expr",
-       "expr '^' expr")
+       "expr '^' expr",
+       "expr '%' expr")
     def expr(self, p):
         return Binary(p[1], p.expr0, p.expr1)
     

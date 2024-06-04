@@ -27,7 +27,7 @@ class Lexer(sly.Lexer):
 	}
 
 	# Literales
-	literals = '+-*/^=():,;'
+	literals = '+-*/^%=():,;'
 
 	# Ignorar
 	ignore = ' \t\r'
@@ -94,6 +94,9 @@ class Lexer(sly.Lexer):
 	def error(self, t):
 		print('Illegal character: %s' % t.value[0], t.lineno)
 		self.index += 1
+
+	def __init__(self, context = None):
+		self.context = context 
 
 if __name__ == '__main__':
 	import sys

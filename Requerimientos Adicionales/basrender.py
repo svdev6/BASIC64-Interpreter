@@ -51,12 +51,6 @@ class DotRender(Visitor):
             self.dot.edge(name, stmt.accept(self))
         return name
 
-    def visit_Command(self, n: Command):
-        name = self.name()
-        self.dot.node(name, label=f'Command\nlineno: {n.lineno}')
-        self.dot.edge(name, n.stmt.accept(self))
-        return name
-
     def visit_Remark(self, n: Remark):
         name = self.name()
         self.dot.node(name, label=f'Remark:{n.rem}')

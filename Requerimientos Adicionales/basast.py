@@ -1,3 +1,5 @@
+# basast.py
+
 from dataclasses import dataclass, field
 from multimethod import multimeta
 from typing import List, Dict, Optional
@@ -16,11 +18,6 @@ class Node:
 @dataclass
 class Statement(Node):
     pass
-
-@dataclass
-class Command(Statement):
-    lineno : int
-    stmt   : Statement
 
 @dataclass
 class Expression(Node):
@@ -53,7 +50,6 @@ class Input(Statement):
     label: str
     vlist: List[Expression]
 
-
 @dataclass
 class For(Statement):
     ident : Expression
@@ -76,47 +72,6 @@ class End(Statement):
 @dataclass
 class Stop(Statement):
     pass
-
-# --- Expression
-
-@dataclass
-class Unary(Expression):
-    op   : str
-    expr : Expression
-
-@dataclass
-class Binary(Expression):
-    op   : str
-    left : Expression
-    right: Expression
-
-@dataclass
-class Logical(Binary):
-    pass
-
-@dataclass
-class Variable(Expression):
-    var  : str
-    dim1 : Optional[Expression] = None
-    dim2 : Optional[Expression] = None
-
-@dataclass
-class Bltin(Expression):
-    name : str
-    expr : List[Expression] = None
-
-@dataclass
-class Literal(Expression):
-    pass
-
-@dataclass
-class String(Literal):
-    value : str
-    expr  : Expression = None
-
-@dataclass
-class Number(Literal):
-    value : int | float
 
 # Corrección del nombre de la clase If a IfStatement
 @dataclass
@@ -166,3 +121,44 @@ class Return(Statement):
 @dataclass
 class Group(Statement):
     expr: Expression
+
+# --- Expression
+
+@dataclass
+class Unary(Expression):
+    op   : str
+    expr : Expression
+
+@dataclass
+class Binary(Expression):
+    op   : str
+    left : Expression
+    right: Expression
+
+@dataclass
+class Logical(Binary):
+    pass
+
+@dataclass
+class Variable(Expression):
+    var  : str
+    dim1 : Optional[Expression] = None
+    dim2 : Optional[Expression] = None
+
+@dataclass
+class Bltin(Expression):
+    name : str
+    expr : List[Expression] = None
+
+@dataclass
+class Literal(Expression):
+    pass
+
+@dataclass
+class String(Literal):
+    value : str
+    expr  : Expression = None
+
+@dataclass
+class Number(Literal):
+    value : int | float

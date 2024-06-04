@@ -1,3 +1,4 @@
-10 LET A(4, 7) = 10
-20 PRINT A(4, 7)
-60 END
+20 LET B = -10
+25 PRINT "Probando Unary: "
+30 PRINT B
+40 END
