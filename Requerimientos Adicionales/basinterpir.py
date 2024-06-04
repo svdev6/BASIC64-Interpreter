@@ -13,6 +13,11 @@ Para ejecutar un programa utilice:
 '''
 import sys
 import struct
+from baslex import Lexer
+from basparse import Parser
+from basast import *
+from ircode import IRGenerator
+
 
 class Interpreter:
   '''
@@ -117,7 +122,6 @@ class Interpreter:
 
   # Interpreter opcodes
   def run_CONSTI(self, value):
-    print(f"Executing CONSTI/CONSTF with value {value}")
     self.push(value)
   run_CONSTF = run_CONSTI
 
@@ -126,30 +130,25 @@ class Interpreter:
         self.push(-value)
 
   def run_ADDI(self):
-    print(f"Executing ADDI/ADDF")
     self.push(self.pop() + self.pop())
   run_ADDF = run_ADDI
 
   def run_SUBI(self):
-    print(f"Executing ADDI/ADDF")
     right = self.pop()
     left = self.pop()
     self.push(left-right)
   run_SUBF = run_SUBI
 
   def run_MULI(self):
-    print(f"Executing ADDI/ADDF")
     self.push(self.pop() * self.pop())
   run_MULF = run_MULI
 
   def run_DIVI(self):
-    print(f"Executing ADDI/ADDF")
     right = self.pop()
     left = self.pop()
     self.push(left // right)
 
   def run_DIVF(self):
-    print(f"Executing ADDI/ADDF")
     right = self.pop()
     left = self.pop()
     self.push(left / right)
@@ -161,7 +160,6 @@ class Interpreter:
     self.push(int(self.pop()))
 
   def run_PRINTI(self):
-    print("Executing PRINTI/PRINTF")
     try:
       print(self.pop())
     except:
@@ -175,31 +173,25 @@ class Interpreter:
         pass
 
   def run_LOCAL_GET(self, name):
-    print(f"Executing LOCAL_GET with variable {name}")
     self.push(self.vars[name])
 
   def run_GLOBAL_GET(self, name):
-    print(f"Executing GLOBAL_GET with variable {name}")
     self.push(self.globals[name])
 
   def run_LOCAL_SET(self, name):
-    print(f"Executing LOCAL_SET with variable {name}")
     self.vars[name] = self.pop()
 
   def run_GLOBAL_SET(self, name):
-    print(f"Executing GLOBAL_SET with variable {name}")
     self.globals[name] = self.pop()
 
   def run_LEI(self):
     right = self.pop()
     left = self.pop()
-    print(f"Executing LEI/LEF with values {left} and {right}")
     self.push(int(left <= right))
 
   run_LEF = run_LEI
 
   def run_LTI(self):
-    print(f"Executing LTI/LTF")
     right = self.pop()
     left = self.pop()
     self.push(int(left < right))
@@ -207,7 +199,6 @@ class Interpreter:
   run_LTF = run_LTI
 
   def run_GEI(self):
-    print(f"Executing GEI/GEF")
     right = self.pop()
     left = self.pop()
     self.push(int(left >= right))
@@ -215,7 +206,6 @@ class Interpreter:
   run_GEF = run_GEI
 
   def run_GTI(self):
-    print(f"Executing GTI/GTF")
     right = self.pop()
     left = self.pop()
     self.push(int(left > right))
@@ -223,7 +213,6 @@ class Interpreter:
   run_GTF = run_GTI
 
   def run_EQI(self):
-    print(f"Executing EQI/EQF")
     right = self.pop()
     left = self.pop()
     self.push(int(left == right))
@@ -231,7 +220,6 @@ class Interpreter:
   run_EQF = run_EQI
 
   def run_NEI(self):
-    print(f"Executing NEI/NEF")
     right = self.pop()
     left = self.pop()
     self.push(int(left != right))
@@ -282,29 +270,23 @@ class Interpreter:
             raise Exception(f"Line number {target} not found")
 
   def run_IF(self):
-    print(f"Executing IF")
     if not self.pop():
       self.pc = self.control[self.pc]
 
   def run_ELSE(self):
-    print(f"Executing ELSE")
     self.pc = self.control[self.pc]
 
   def run_ENDIF(self):
-    print(f"Executing ENDIF")
     pass
 
   def run_LOOP(self):
-    print(f"Executing LOOP")
     pass
 
   def run_CBREAK(self):
-    print(f"Executing CBREAK")
     if self.pop():
       self.pc = self.control[self.pc]
 
   def run_ENDLOOP(self):
-    print(f"Executing ENDLOOP")
     self.pc = self.control[self.pc]
 
   def run_LINE(self, line):
@@ -315,7 +297,6 @@ class Interpreter:
     self.execute(name)
 
   def run_RET(self):
-    print(f"Executing RET")
     self.pc = len(self.code)
 
 def run(module):
@@ -326,3 +307,34 @@ def run(module):
     interpreter.add_function(func.name, argnames, func.code)
 
   interpreter.execute('main')
+
+def main():
+    
+    context = None
+    l = Lexer()
+    p = Parser(context)
+
+    if len(sys.argv) != 2:
+        print("Uso: python basircode.py <archivo.bas>")
+        sys.exit(1)
+    
+    source_file = sys.argv[1]
+
+    try:
+        with open(source_file, 'r') as file:
+            source_code = file.read()
+            tokens = l.tokenize(source_code)
+            ast = p.parse(tokens)
+            generator = IRGenerator()
+            generated_code = generator.generate(ast)
+            print(generated_code)
+            interpreter = Interpreter()
+            interpreter.add_function('main', [], generated_code)
+            interpreter.execute('main')
+    except FileNotFoundError:
+        print(f"File '{source_file}' wasn't found.")
+    except Exception as e:
+        print(f"An error occurred during program execution: {e}")
+
+if __name__ == "__main__":
+    main()

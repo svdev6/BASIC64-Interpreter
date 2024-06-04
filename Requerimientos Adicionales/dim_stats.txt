@@ -1,3 +1,0 @@
-This program took 0.08 seconds to run
-Memory usage: 26980352 bytes
-Total number of processed lines: 14

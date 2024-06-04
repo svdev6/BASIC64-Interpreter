@@ -1,3 +1,0 @@
-Este programa tardó 0.00 segundos en ejecutarse.
-Uso de memoria: 26509312 bytes
-Número total de lineas ejecutadas con éxito: 5

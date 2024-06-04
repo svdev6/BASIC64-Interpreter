@@ -1,0 +1,7 @@
+10 REM TESTING THE GOTO INSTRUCTION
+20 PRINT "Testing the GOTO instruction"
+25 GOTO 40
+30 LET A = 10
+35 PRINT A
+40 PRINT "Jump Successful"
+50 END

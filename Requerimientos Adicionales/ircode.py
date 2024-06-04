@@ -1,10 +1,7 @@
-from baslex import Lexer
-from basparse import Parser
 from typing import Any, List, Dict
 from basast import *
-from basinterpir import Interpreter
 
-class IR_Visitor:
+class IRGenerator:
     def __init__(self):
         self.code = []
         self.loop_stack = []
@@ -141,6 +138,9 @@ class IR_Visitor:
             self.visit(e)
         self.code.append(('CALL', node.name))
 
+    def visit_Stop(self, node: Stop):
+        self.code.append(('RET', ))
+
     def visit_End(self, node: End):
         self.code.append(('RET', ))
 
@@ -149,32 +149,3 @@ class IR_Visitor:
             self.code.append(('LINE', lineno))
             self.visit(statement)
         return self.code
-
-def main():
-    context = None
-    l = Lexer()
-    p = Parser(context)
-    
-    import sys
-
-    if len(sys.argv) != 2:
-        print("Uso: python basircode.py <archivo.bas>")
-        sys.exit(1)
-
-    source_file = sys.argv[1]
-    with open(source_file, 'r') as file:
-        source_code = file.read()
-
-    tokens = l.tokenize(source_code)
-    ast = p.parse(tokens)
-
-    generator = IR_Visitor()
-    generated_code = generator.generate(ast)
-    print(generated_code)
-
-    i = Interpreter()
-    i.add_function('main', [], generated_code)
-    i.execute('main')
-
-if __name__ == "__main__":
-    main()
