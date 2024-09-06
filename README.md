@@ -1,1 +1,1 @@
-This is a BASIC64 interpreter, based on the initial DartmouthBASIC version and it is currently being coded with Python, using the SLY library.
+This is a BASIC64 interpreter, based on the original DartmouthBASIC version and it includes new instructions that were later introduced in newer versions. It was coded with Python, using the SLY library.
